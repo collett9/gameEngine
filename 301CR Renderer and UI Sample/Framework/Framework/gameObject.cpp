@@ -7,7 +7,7 @@ void gameObject::renderCreation(sf::Vector2f size, sf::Color colour, sf::Vector2
 
 	gameObjectShape.setSize(size); 
 	gameObjectShape.setFillColor(colour); 
-	gameObjectShape.setPosition(position);
+	gameObjectShape.setPosition(sf::Vector2f(position.x, position.y));
 
 	if (outLineSize > 0)
 	{
@@ -25,11 +25,14 @@ void gameObject::physicsCreation(float positionX, float positionY, float sizeX, 
 
 gameObject::gameObject(b2Vec2 Position, float Rotation, float SizeX, float SizeY, sf::Color Colour, float Density, float Friction, float LinearDamping, physicsSync* PhysicsWorld)
 {
-	PhysicsWorld->addPhysicsObject(Position.x, Position.y, SizeX, SizeY, Density, Friction, LinearDamping);
+	PhysicsWorld->addPhysicsObject(Position.x , Position.y , SizeX, SizeY, Density, Friction, LinearDamping);
 
 	gameObjectShape.setSize(sf::Vector2f(SizeX * 2, SizeY * 2));
 	gameObjectShape.setFillColor(Colour);
-	gameObjectShape.setPosition(sf::Vector2f(Position.x - SizeX, Position.y - SizeY));
+	gameObjectShape.setPosition(sf::Vector2f(Position.x, Position.y));
+
+	sizeX = SizeX;
+	sizeY = SizeY;
 
 	//if (outLineSize > 0)
 	//{

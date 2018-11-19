@@ -1,4 +1,5 @@
 #include "game.h"
+#define PI 3.14159265359
 
 
 
@@ -17,10 +18,10 @@ void game::setUp(std::string windowName, int Width, int Height)
 
 
 	//add gameObjects here!
-	gameObject object1 = gameObject(b2Vec2(500, 500), 0, 50, 50, sf::Color::Black, 0.3, 0.3, 0.3, test);
+	gameObject* object1 = new gameObject(b2Vec2(500, 500), 0, 50, 50, sf::Color::Black, 0.3, 0.3, 0.3, test);
 	gameObjectsVector.push_back(object1);
 
-	gameObject object2 = gameObject(b2Vec2(600, 600), 0, 1, 1, sf::Color::Yellow, 0.3, 0.3, 0.3, test);
+	gameObject* object2 = new gameObject(b2Vec2(600, 600), 0, 10, 10, sf::Color::Yellow, 0.3, 0.3, 0.3, test);
 	gameObjectsVector.push_back(object2);
 
 	test->physicsSetup();
@@ -64,11 +65,20 @@ void game::update()
 	//test.world->Step(timeStep, velocityIterations, positionIterations);
 	//	for()
 
+	for (int i = 0; i < gameObjectsVector.size(); i++)
+	{
+		gameObjectsVector[i]->gameObjectShape.setPosition(sf::Vector2f(test->positionVectors[i].x , test->positionVectors[i].y));
+		gameObjectsVector[i]->gameObjectShape.setOrigin(sf::Vector2f(test->sizeVectors[i].x, test->sizeVectors[i].y));
+		gameObjectsVector[i]->gameObjectShape.setRotation(glm::degrees(test->rotationVectors[i]));
+		
+	}
+
+	
 	b2Vec2 position = b2Vec2(test->positionVectors[1].x, test->positionVectors[1].y);
 	float32 angle = test->rotationVectors[1];
 	printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
-	gameObjectsVector[1].gameObjectShape.setPosition(sf::Vector2f(position.x - 1.0f, position.y - 1.0f));
-	gameObjectsVector[1].gameObjectShape.setRotation(angle);
+	//gameObjectsVector[1]->gameObjectShape.setPosition(sf::Vector2f(position.x - 1.0f, position.y - 1.0f));
+	//gameObjectsVector[1]->gameObjectShape.setRotation(angle);
 	//shape.setPosition(position.x, position.y);
 
 
@@ -100,7 +110,7 @@ void game::eventHandler()
 		{
 			//texturedShape.move(sf::Vector2f(-0.5f, 0.0f));
 
-			test->physicsBodies[1]->ApplyForce(b2Vec2(-10, 0), b2Vec2(test->positionVectors[1].x, test->positionVectors[1].y), 1);
+			test->physicsBodies[1]->ApplyForce(b2Vec2(-1000, 0), b2Vec2(test->positionVectors[1].x, test->positionVectors[1].y), 1);
 			//body->SetTransform(b2Vec2(position.x - 0.05, position.y), 0);
 
 		}
@@ -108,19 +118,19 @@ void game::eventHandler()
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
 			//texturedShape.move(sf::Vector2f(0.5f, 0.0f));
-			test->physicsBodies[1]->ApplyForce(b2Vec2(10, 0), b2Vec2(test->positionVectors[1].x, test->positionVectors[1].y), 1);
+			test->physicsBodies[1]->ApplyForce(b2Vec2(1000, 0), b2Vec2(test->positionVectors[1].x, test->positionVectors[1].y), 1);
 			//body->SetTransform(b2Vec2(position.x + 0.05, position.y), 0);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
 			//texturedShape.move(sf::Vector2f(0.0f, -0.5f));
-			test->physicsBodies[1]->ApplyForce(b2Vec2(0, 10), b2Vec2(test->positionVectors[1].x, test->positionVectors[1].y), 1);
+			test->physicsBodies[1]->ApplyForce(b2Vec2(0, 1000), b2Vec2(test->positionVectors[1].x, test->positionVectors[1].y), 1);
 			//body->SetTransform(b2Vec2(position.x, position.y - 0.05), 0);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		{
 			//texturedShape.move(sf::Vector2f(0.0f, 0.5f));
-			test->physicsBodies[1]->ApplyForce(b2Vec2(0, -10), b2Vec2(test->positionVectors[1].x, test->positionVectors[1].y), 1);
+			test->physicsBodies[1]->ApplyForce(b2Vec2(0, -1000), b2Vec2(test->positionVectors[1].x, test->positionVectors[1].y), 1);
 
 			//body->SetTransform(b2Vec2(position.x, position.y + 0.05), 0);
 
@@ -128,6 +138,9 @@ void game::eventHandler()
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		{
+			//gameObjectsVector.pop_back();
+			//delete gameObjectsVector.front();
+			//gameObjectsVector.resize(gameObjectsVector.size() - 1);
 			//texturedShape.move(sf::Vector2f(0.0f, 0.5f));
 			//test.physicsBodies[1]->ApplyForce(b2Vec2(0, -1), b2Vec2(position.x + 5, position.y + 5), 1);
 
@@ -147,7 +160,7 @@ void game::render()
 
 	for (int i = 0; i < gameObjectsVector.size(); i++)
 	{
-		gameWindow->draw(gameObjectsVector[i].gameObjectShape);
+		gameWindow->draw(gameObjectsVector[i]->gameObjectShape);
 	}
 
 	gameWindow->display();

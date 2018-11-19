@@ -12,6 +12,7 @@ public:
 
 	std::vector <b2Vec2> positionVectors;
 	std::vector <float> rotationVectors;
+	std::vector <b2Vec2> sizeVectors;
 
 	//b2World world;
 	std::vector <b2Body*> physicsBodies;

@@ -13,6 +13,8 @@ public:
 	b2Vec2 position;
 	float rotation;
 
+	float sizeY, sizeX;
+
 	sf::RectangleShape gameObjectShape;
 
 	void renderCreation(sf::Vector2f size, sf::Color colour, sf::Vector2f position, float outLineSize, sf::Color outlineColour);

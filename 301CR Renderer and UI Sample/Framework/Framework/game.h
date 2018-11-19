@@ -6,6 +6,7 @@
 #include <iostream>
 #include "gameObject.h"
 #include <vector>
+#include <glm\glm.hpp>
 
 class game
 {
@@ -21,7 +22,7 @@ public:
 	physicsSync *test = nullptr;
 
 
-	std::vector <gameObject> gameObjectsVector;
+	std::vector <gameObject*> gameObjectsVector;
 
 	float32 timeStep = 1.0f / 60.0f;
 
@@ -31,6 +32,7 @@ public:
 	sf::Event e;
 
 	void setUp(std::string windowName, int Width, int Height);
+	double get_degrees(float input);
 	void update();
 	void eventHandler();
 	void render();

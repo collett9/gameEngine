@@ -91,7 +91,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\liamc\Downloads\301CR Renderer and UI Sample Extract 2\301CR Renderer and UI Sample\Framework\Framework\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\liamc\Documents\GitHub\gameEngine\301CR Renderer and UI Sample\Framework\Framework\include\glm-0.9.6.3;C:\Users\liamc\Downloads\301CR Renderer and UI Sample Extract 2\301CR Renderer and UI Sample\Framework\Framework\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;sfml-system-d.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
