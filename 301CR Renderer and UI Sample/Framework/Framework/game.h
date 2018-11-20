@@ -7,6 +7,7 @@
 #include "gameObject.h"
 #include <vector>
 #include <glm\glm.hpp>
+#include "renderer.h"
 
 class game
 {
@@ -16,10 +17,14 @@ public:
 	sf::CircleShape shape = sf::CircleShape(100.f);
 
 
-	sf::RenderWindow* gameWindow;
+	
 	//physicsSync test = physicsSync(0.0f, 0.0f);
 
-	physicsSync *test = nullptr;
+	physicsSync *physics = nullptr;
+
+	renderer *rendererGame = nullptr;
+
+	bool isGameWindowOpen;
 
 
 	std::vector <gameObject*> gameObjectsVector;
@@ -32,7 +37,6 @@ public:
 	sf::Event e;
 
 	void setUp(std::string windowName, int Width, int Height);
-	double get_degrees(float input);
 	void update();
 	void eventHandler();
 	void render();

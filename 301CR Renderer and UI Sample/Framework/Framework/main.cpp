@@ -34,16 +34,21 @@ int frameTime;
 
 game *game1 = nullptr;
 
+sf::RenderWindow* gameWindow = nullptr;
+
 
 void main()
 {
+	gameWindow = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Game Window");
+
 	game1 = new game();
 
 	game1->setUp("TestGame", 1920, 1080);
+	game1->rendererGame->attachWindow(gameWindow);
 
 
 
-	while (game1->gameWindow->isOpen()) {
+	while (game1->rendererGame->gameWindow->isOpen()) {
 		//for (int32 i = 0; i < 60; ++i)
 		//{
 

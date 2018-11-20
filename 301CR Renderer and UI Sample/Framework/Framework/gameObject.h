@@ -17,13 +17,11 @@ public:
 
 	sf::RectangleShape gameObjectShape;
 
-	void renderCreation(sf::Vector2f size, sf::Color colour, sf::Vector2f position, float outLineSize, sf::Color outlineColour);
-	void physicsCreation(float positionX, float positionY, float sizeX, float sizeY, float desnity, float friction, float linearDamping, physicsSync physicsWorld);
+	//void renderCreation(sf::Vector2f size, sf::Color colour, sf::Vector2f position, float outLineSize, sf::Color outlineColour);
+	//void physicsCreation(float positionX, float positionY, float sizeX, float sizeY, float desnity, float friction, float linearDamping, physicsSync physicsWorld, bool isStatic);
 
-	gameObject(b2Vec2 Position, float Rotation, float SizeX, float SizeY, sf::Color Colour, float Density, float Friction, float LinearDamping, physicsSync * PhysicsWorld);
-	
 
-//	gameObject(b2Vec2 Position, float Rotation, float SizeX, float SizeY, sf::Color Colour, float Density, float Friction, float LinearDamping, physicsSync PhysicsWorld);
+	gameObject(b2Vec2 Position, float Rotation, float SizeX, float SizeY, sf::Color Colour, float Density, float Friction, float LinearDamping, physicsSync * PhysicsWorld, bool isStatic);
 
 	~gameObject();
 };
