@@ -4,7 +4,11 @@ class eventMove :
 	public gameEvent
 {
 public:
-	eventMove(float xSpeed, float ySpeed);
+	float XSpeed;
+	float YSpeed;
+
+	//eventMove(float xSpeed, float ySpeed);
+	eventMove(float xSpeed, float ySpeed, gameObject * gameObjectInvolved);
 	~eventMove();
 };
 

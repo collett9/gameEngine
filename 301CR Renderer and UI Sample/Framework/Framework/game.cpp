@@ -34,8 +34,17 @@ void game::update()
 
 void game::eventHandler()
 {
+	for (int i = 0; i < gameEventsVector.size(); i++)
+	{
+		for (int j = 0; j < gameEventsVector[i]->whichSubsystemsInvovlved.size(); j++)
+		{
+			if (gameEventsVector[i]->whichSubsystemsInvovlved[j] == gameEvent::Physics)
+			{
+				physics->physicsEventSolver(gameEventsVector[i]);
+			}
+		}
 
-
+	}
 }
 
 void game::inputHandler()

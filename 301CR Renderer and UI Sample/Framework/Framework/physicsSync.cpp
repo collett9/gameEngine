@@ -80,6 +80,18 @@ void physicsSync::physicsUpdate(float32 timeStep, int32 velocityIterations, int3
 
 }
 
+void physicsSync::physicsEventSolver(gameEvent* gameEvent)
+{
+
+	if (gameEvent->eventType == gameEvent::movement)
+	{
+		physicsBodies[1]->ApplyForce(b2Vec2(-1000, 0), b2Vec2(positionVectors[1].x, positionVectors[1].y), 1);
+		gameEvent->whichSubsystemsInvovlved.pop_back();
+	}
+
+}
+
+
 physicsSync::physicsSync(float GravityX, float GravityY)
 {
 	gravityX = GravityX;
