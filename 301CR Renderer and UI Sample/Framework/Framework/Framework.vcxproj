@@ -126,14 +126,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="eventMove.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="gameEvent.cpp" />
     <ClCompile Include="gameObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="physicsSync.cpp" />
     <ClCompile Include="renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="eventMove.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="gameEvent.h" />
     <ClInclude Include="gameObject.h" />
     <ClInclude Include="physicsSync.h" />
     <ClInclude Include="renderer.h" />

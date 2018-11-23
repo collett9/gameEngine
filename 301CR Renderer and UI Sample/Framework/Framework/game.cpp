@@ -34,6 +34,13 @@ void game::update()
 
 void game::eventHandler()
 {
+
+
+}
+
+void game::inputHandler()
+{
+
 	rendererGame->gameWindow->pollEvent(e);
 
 	if (e.type == sf::Event::Closed) {
@@ -58,8 +65,12 @@ void game::eventHandler()
 		{
 			//texturedShape.move(sf::Vector2f(-0.5f, 0.0f));
 
+
 			physics->physicsBodies[1]->ApplyForce(b2Vec2(-1000, 0), b2Vec2(physics->positionVectors[1].x, physics->positionVectors[1].y), 1);
 			//body->SetTransform(b2Vec2(position.x - 0.05, position.y), 0);
+
+			//gameEventsVector.push_back(new gameEvent(eventMove(2.0, 0.0)));
+
 
 		}
 
@@ -94,6 +105,18 @@ void game::eventHandler()
 
 		}
 
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+		{
+			char test = sf::Keyboard::Key();
+
+			//gameObjectsVector.pop_back();
+			//delete gameObjectsVector.front();
+			//gameObjectsVector.resize(gameObjectsVector.size() - 1);
+			//texturedShape.move(sf::Vector2f(0.0f, 0.5f));
+			//physics.physicsBodies[1]->ApplyForce(b2Vec2(0, -1), b2Vec2(position.x + 5, position.y + 5), 1);
+
+		}
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 		{
 			rendererGame->gameWindow->close();
@@ -104,7 +127,7 @@ void game::eventHandler()
 
 void game::render()
 {
-
+	// use the renderer to render the gameObjects to the screen
 	rendererGame->renderToScreen(gameObjectsVector);
 
 

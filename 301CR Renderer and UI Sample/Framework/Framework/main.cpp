@@ -54,7 +54,7 @@ void main()
 
 		game1->update();
 		game1->render();
-		game1->eventHandler();
+		game1->inputHandler();
 
 		}
 	//}

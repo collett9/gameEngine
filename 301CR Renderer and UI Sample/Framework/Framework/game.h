@@ -8,6 +8,8 @@
 #include <vector>
 #include <glm\glm.hpp>
 #include "renderer.h"
+#include "gameEvent.h"
+#include "eventMove.h"
 
 class game
 {
@@ -28,6 +30,7 @@ public:
 
 
 	std::vector <gameObject*> gameObjectsVector;
+	std::vector <gameEvent*> gameEventsVector;
 
 	float32 timeStep = 1.0f / 60.0f;
 
@@ -39,6 +42,7 @@ public:
 	void setUp(std::string windowName, int Width, int Height);
 	void update();
 	void eventHandler();
+	void inputHandler();
 	void render();
 
 	game();
