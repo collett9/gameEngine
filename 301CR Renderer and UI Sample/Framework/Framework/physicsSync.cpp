@@ -1,20 +1,6 @@
 #include "physicsSync.h"
 
 
-void physicsSync::physicsSetup()
-{
-	//setting up the position vectors for the first frame
-	positionVectors.resize(physicsBodies.size());
-	rotationVectors.resize(physicsBodies.size());
-
-	for (int i = 0; i < physicsBodies.size(); i++)
-	{
-		positionVectors[i] = physicsBodies[i]->GetPosition();
-		rotationVectors[i] = physicsBodies[i]->GetAngle();
-	}
-
-}
-
 // adds physics object to the scene, currently only adds a box ADD MORE TYPES
 void physicsSync::addPhysicsObject(float positionX, float positionY, float hitBoxSizeX, float hitBoxSizeY, float density, float friction, float linearDamping, bool isStatic)
 {
@@ -36,7 +22,7 @@ void physicsSync::addPhysicsObject(float positionX, float positionY, float hitBo
 		physicsBodies.back()->CreateFixture(&fixtureDef);
 		physicsBodies.back()->SetLinearDamping(linearDamping);
 
-		sizeVectors.push_back(b2Vec2(hitBoxSizeX, hitBoxSizeY));
+		//sizeVectors.push_back(b2Vec2(hitBoxSizeX, hitBoxSizeY));
 	}
 
 	else if (isStatic == false)
@@ -57,11 +43,33 @@ void physicsSync::addPhysicsObject(float positionX, float positionY, float hitBo
 		physicsBodies.back()->CreateFixture(&fixtureDef);
 		physicsBodies.back()->SetLinearDamping(linearDamping);
 
-		sizeVectors.push_back(b2Vec2(hitBoxSizeX, hitBoxSizeY));
+		//sizeVectors.push_back(b2Vec2(hitBoxSizeX, hitBoxSizeY));
 	}
 
 
 }
+
+void physicsSync::physicsSetup()
+{
+	for (int i = 0; i < positionVectors.size(); i++)
+	{
+		// change this later to get all of the data before it comes here
+		addPhysicsObject(positionVectors[i].x, positionVectors[i].y, sizeVectors[i].x, sizeVectors[i].y, 0.5, 0.5, 0.5, false);
+	}
+
+	//setting up the position vectors for the first frame
+	//positionVectors.resize(physicsBodies.size());
+	//rotationVectors.resize(physicsBodies.size());
+
+	for (int i = 0; i < physicsBodies.size(); i++)
+	{
+		//positionVectors[i] = physicsBodies[i]->GetPosition();
+		rotationVectors[i] = physicsBodies[i]->GetAngle();
+	}
+
+}
+
+
 
 // updates the physics and outputs the positions and rotations of the various physics objects
 void physicsSync::physicsUpdate(float32 timeStep, int32 velocityIterations, int32 positionIterations)
@@ -80,13 +88,15 @@ void physicsSync::physicsUpdate(float32 timeStep, int32 velocityIterations, int3
 
 }
 
-void physicsSync::physicsEventSolver(gameEvent* gameEvent)
+void physicsSync::physicsEventSolver(gameEvent* gameEventToSolve)
 {
 
-	if (gameEvent->eventType == gameEvent::movement)
+	if (gameEventToSolve->eventType == gameEvent::movement)
 	{
-		physicsBodies[1]->ApplyForce(b2Vec2(-1000, 0), b2Vec2(positionVectors[1].x, positionVectors[1].y), 1);
-		gameEvent->whichSubsystemsInvovlved.pop_back();
+//		eventMove move = *(eventMove*)gameEventToSolve;
+		//eventMove* moveTest = (eventMove*)gameEventToSolve;
+		physicsBodies[gameEventToSolve->gameObjectsInvolved[0]->gameObjectId]->SetLinearVelocity(b2Vec2((eventMove*)gameEventToSolve->, move.YSpeed) );
+		gameEventToSolve->whichSubsystemsInvovlved.pop_back();
 	}
 
 }

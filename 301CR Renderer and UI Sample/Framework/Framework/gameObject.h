@@ -2,7 +2,7 @@
 #include <vector>
 #include <Box2D\Box2D.h>
 #include <SFML\Graphics.hpp>
-#include "physicsSync.h"
+//#include "physicsSync.h"
 
 
 class gameObject
@@ -13,6 +13,11 @@ public:
 	b2Vec2 position;
 	float rotation;
 
+	float density;
+	float friction;
+	float linearDamping;
+	bool IsStatic;
+
 	float sizeY, sizeX;
 
 	sf::RectangleShape gameObjectShape;
@@ -21,7 +26,7 @@ public:
 	//void physicsCreation(float positionX, float positionY, float sizeX, float sizeY, float desnity, float friction, float linearDamping, physicsSync physicsWorld, bool isStatic);
 
 
-	gameObject(b2Vec2 Position, float Rotation, float SizeX, float SizeY, sf::Color Colour, float Density, float Friction, float LinearDamping, physicsSync * PhysicsWorld, bool isStatic);
+	gameObject(b2Vec2 Position, float Rotation, float SizeX, float SizeY, sf::Color Colour, float Density, float Friction, float LinearDamping, bool isStatic);
 
 	~gameObject();
 };

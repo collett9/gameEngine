@@ -2,9 +2,12 @@
 
 
 // creating a game object, making a physics object as well as a sfml object
-gameObject::gameObject(b2Vec2 Position, float Rotation, float SizeX, float SizeY, sf::Color Colour, float Density, float Friction, float LinearDamping, physicsSync* PhysicsWorld, bool isStatic)
+gameObject::gameObject(b2Vec2 Position, float Rotation, float SizeX, float SizeY, sf::Color Colour, float Density, float Friction, float LinearDamping, bool isStatic)
 {
-	PhysicsWorld->addPhysicsObject(Position.x , Position.y , SizeX, SizeY, Density, Friction, LinearDamping, isStatic);
+	//PhysicsWorld->addPhysicsObject(Position.x , Position.y , SizeX, SizeY, Density, Friction, LinearDamping, isStatic);
+
+	position = Position;
+	rotation = Rotation;
 
 	gameObjectShape.setSize(sf::Vector2f(SizeX * 2, SizeY * 2));
 	gameObjectShape.setFillColor(Colour);
@@ -12,6 +15,11 @@ gameObject::gameObject(b2Vec2 Position, float Rotation, float SizeX, float SizeY
 
 	sizeX = SizeX;
 	sizeY = SizeY;
+
+	density = Density;
+	friction = Friction;
+	linearDamping = LinearDamping;
+	IsStatic = isStatic;
 
 	//if (outLineSize > 0)
 	//{

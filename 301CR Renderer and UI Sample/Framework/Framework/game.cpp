@@ -1,5 +1,6 @@
 #include "game.h"
 
+int playerId = 1;
 
 void game::setUp(std::string windowName, int Width, int Height)
 {
@@ -8,11 +9,24 @@ void game::setUp(std::string windowName, int Width, int Height)
 	rendererGame = new renderer();
 
 	//add gameObjects here!
-	gameObject* object1 = new gameObject(b2Vec2(500, 500), 0, 50, 50, sf::Color::Black, 0.3, 0.3, 0.3, physics, true);
+	gameObject* object1 = new gameObject(b2Vec2(500, 500), 0, 50, 50, sf::Color::Black, 0.3, 0.3, 0.3, true);
 	gameObjectsVector.push_back(object1);
 
-	gameObject* object2 = new gameObject(b2Vec2(600, 600), 0, 10, 10, sf::Color::Yellow, 0.3, 0.3, 0.3, physics, false);
+	gameObject* object2 = new gameObject(b2Vec2(600, 600), 0, 10, 10, sf::Color::Yellow, 0.3, 0.3, 0.3,  false);
 	gameObjectsVector.push_back(object2);
+
+
+	// could be an issue here in the future with objects not updating!
+	for (int i = 0; i < gameObjectsVector.size(); i++)
+	{
+		//adding all of the gameobject data into the physics susbsystem for it to create physics objects based on it
+
+		physics->positionVectors.push_back(gameObjectsVector[i]->position);
+		physics->rotationVectors.push_back(gameObjectsVector[i]->rotation);
+		physics->sizeVectors.push_back(b2Vec2(gameObjectsVector[i]->sizeX, gameObjectsVector[i]->sizeY));
+		gameObjectsVector[i]->gameObjectId = i;
+	}
+
 
 	physics->physicsSetup();
 
@@ -42,6 +56,11 @@ void game::eventHandler()
 			{
 				physics->physicsEventSolver(gameEventsVector[i]);
 			}
+		}
+
+		if (gameEventsVector[i]->whichSubsystemsInvovlved.size() == 0)
+		{
+			gameEventsVector.pop_back();
 		}
 
 	}
@@ -75,10 +94,11 @@ void game::inputHandler()
 			//texturedShape.move(sf::Vector2f(-0.5f, 0.0f));
 
 
-			physics->physicsBodies[1]->ApplyForce(b2Vec2(-1000, 0), b2Vec2(physics->positionVectors[1].x, physics->positionVectors[1].y), 1);
+			//physics->physicsBodies[1]->ApplyForce(b2Vec2(-1000, 0), b2Vec2(physics->positionVectors[1].x, physics->positionVectors[1].y), 1);
 			//body->SetTransform(b2Vec2(position.x - 0.05, position.y), 0);
 
 			//gameEventsVector.push_back(new gameEvent(eventMove(2.0, 0.0)));
+			gameEventsVector.push_back(new gameEvent(eventMove(10.0f, 0.0f, gameObjectsVector[playerId])));
 
 
 		}

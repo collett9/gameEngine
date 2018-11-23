@@ -2,6 +2,7 @@
 #include <vector>
 #include "Box2D\Box2D.h"
 #include "gameEvent.h"
+#include "eventMove.h"
 
 class physicsSync
 {
@@ -22,7 +23,7 @@ public:
 
 	void physicsUpdate(float32 timeStep, int32 velocityIterations, int32 positionIterations);
 
-	void physicsEventSolver(gameEvent * gameEvent);
+	void physicsEventSolver(gameEvent * gameEventToSolve);
 
 
 	physicsSync(float GravityX, float GravityY);

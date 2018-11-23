@@ -1,23 +1,4 @@
-﻿  eventMove.cpp
-c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\physicssync.h(25): error C2061: syntax error: identifier 'gameEvent'
-  game.cpp
-c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\gameobject.h(24): error C2061: syntax error: identifier 'physicsSync'
-c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\game.cpp(11): error C2661: 'gameObject::gameObject': no overloaded function takes 10 arguments
-c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\game.cpp(14): error C2661: 'gameObject::gameObject': no overloaded function takes 10 arguments
-  gameEvent.cpp
-c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\physicssync.h(25): error C2061: syntax error: identifier 'gameEvent'
-  gameObject.cpp
-c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\gameevent.h(24): error C2065: 'gameObject': undeclared identifier
-c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\gameevent.h(24): error C2059: syntax error: '>'
-c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\gameevent.h(24): error C2976: 'std::vector': too few template arguments
-  c:\visual studio\vc\tools\msvc\14.13.26128\include\vector(662): note: see declaration of 'std::vector'
-  main.cpp
-c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\gameobject.h(24): error C2061: syntax error: identifier 'physicsSync'
-  physicsSync.cpp
-c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\gameobject.h(24): error C2061: syntax error: identifier 'physicsSync'
-  renderer.cpp
-c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\gameevent.h(24): error C2065: 'gameObject': undeclared identifier
-c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\gameevent.h(24): error C2059: syntax error: '>'
-c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\gameevent.h(24): error C2976: 'std::vector': too few template arguments
-  c:\visual studio\vc\tools\msvc\14.13.26128\include\vector(662): note: see declaration of 'std::vector'
-  Generating Code...
+﻿  game.cpp
+c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\game.cpp(12): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\game.cpp(15): warning C4305: 'argument': truncation from 'double' to 'float'
+  Framework.vcxproj -> C:\Users\liamc\Documents\GitHub\gameEngine\301CR Renderer and UI Sample\Framework\x64\Debug\Framework.exe
