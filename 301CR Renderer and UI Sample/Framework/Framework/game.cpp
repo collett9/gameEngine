@@ -2,6 +2,7 @@
 
 int playerId = 1;
 
+
 void game::setUp(std::string windowName, int Width, int Height)
 {
 	physics = new physicsSync(0.0f, 0.0f);

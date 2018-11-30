@@ -94,8 +94,27 @@ void physicsSync::physicsEventSolver(gameEvent* gameEventToSolve)
 	if (gameEventToSolve->eventType == gameEvent::movement)
 	{
 //		eventMove move = *(eventMove*)gameEventToSolve;
+		
+		//float speedXTest = static_cast<float>(gameEventToSolve->dateToStore[0]);
+		
+		//float speedYTest = moveTest.YSpeed;
+
+		//float speedXTest = *(float*)gameEventToSolve->voidPointerData;
+		//float *speedYTest = static_cast<float*>(gameEventToSolve->voidPointerData2);
+
+	/*	void* n = new void*;
+
+		memcpy(n, &gameEventToSolve->voidPointerData , sizeof(float));
+
+		float* newFloat = (float*)gameEventToSolve->voidPointerData;
+
+		float deRef = *newFloat;*/
+
+		float *numberFinal = (float*)gameEventToSolve->testBin->eventVoidPointerVector[0];
+		float numberFinalFinal = *numberFinal;
+
 		//eventMove* moveTest = (eventMove*)gameEventToSolve;
-		physicsBodies[gameEventToSolve->gameObjectsInvolved[0]->gameObjectId]->SetLinearVelocity(b2Vec2((eventMove*)gameEventToSolve->, move.YSpeed) );
+		//physicsBodies[gameEventToSolve->gameObjectsInvolved[0]->gameObjectId]->SetLinearVelocity() );
 		gameEventToSolve->whichSubsystemsInvovlved.pop_back();
 	}
 

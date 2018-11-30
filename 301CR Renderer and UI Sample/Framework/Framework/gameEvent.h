@@ -24,6 +24,17 @@ public:
 
 	std::vector <gameObject*> gameObjectsInvolved;
 
+	struct bin {
+		std::vector<void*> eventVoidPointerVector;
+	};
+
+	bin* testBin = new bin;
+
+	//std::vector <void*> dateToStore;
+
+	void *voidPointerData;
+	void *voidPointerData2;
+
 	enum whichSubsystem
 	{
 		Physics,
