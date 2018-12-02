@@ -10,6 +10,7 @@
 #include "renderer.h"
 #include "gameEvent.h"
 #include "eventMove.h"
+#include "wallObject.h"
 
 class game
 {

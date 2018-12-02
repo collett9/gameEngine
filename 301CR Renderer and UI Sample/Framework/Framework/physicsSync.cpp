@@ -53,8 +53,8 @@ void physicsSync::physicsSetup()
 {
 	for (int i = 0; i < positionVectors.size(); i++)
 	{
-		// change this later to get all of the data before it comes here
-		addPhysicsObject(positionVectors[i].x, positionVectors[i].y, sizeVectors[i].x, sizeVectors[i].y, 0.5, 0.5, 0.5, false);
+		// change this later to get all of the data before it comes here CHANGED THIS
+		//addPhysicsObject(positionVectors[i].x, positionVectors[i].y, sizeVectors[i].x, sizeVectors[i].y, 0.5, 0.5, 0.5, false);
 	}
 
 	//setting up the position vectors for the first frame
@@ -110,12 +110,26 @@ void physicsSync::physicsEventSolver(gameEvent* gameEventToSolve)
 
 		float deRef = *newFloat;*/
 
-		float *numberFinal = (float*)gameEventToSolve->testBin->eventVoidPointerVector[0];
-		float numberFinalFinal = *numberFinal;
+
+		float finalSpeedX = *(float*)gameEventToSolve->testBin->eventVoidPointerVector[0];
+		float finalSpeedY = *(float*)gameEventToSolve->testBin->eventVoidPointerVector[1];
+
+		//delete gameEventToSolve->testBin->eventVoidPointerVector[0];
+		//delete gameEventToSolve->testBin->eventVoidPointerVector[1];
+		//delete gameEventToSolve->testBin;
 
 		//eventMove* moveTest = (eventMove*)gameEventToSolve;
-		//physicsBodies[gameEventToSolve->gameObjectsInvolved[0]->gameObjectId]->SetLinearVelocity() );
+		physicsBodies[gameEventToSolve->gameObjectsInvolved[0]->gameObjectId]->SetLinearVelocity(b2Vec2(finalSpeedX, finalSpeedY));
 		gameEventToSolve->whichSubsystemsInvovlved.pop_back();
+
+
+
+
+	//	delete newSpeedX;
+		//delete newSpeedY;
+
+	
+
 	}
 
 }

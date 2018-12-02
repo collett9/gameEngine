@@ -24,7 +24,9 @@ public:
 
 	std::vector <gameObject*> gameObjectsInvolved;
 
+	// collection of the void pointers that contain the memory addresses of the data needed for each event to solve
 	struct bin {
+
 		std::vector<void*> eventVoidPointerVector;
 	};
 
@@ -32,8 +34,6 @@ public:
 
 	//std::vector <void*> dateToStore;
 
-	void *voidPointerData;
-	void *voidPointerData2;
 
 	enum whichSubsystem
 	{
@@ -47,6 +47,7 @@ public:
 
 
 	gameEvent();
+	void clearMemory();
 	~gameEvent();
 };
 

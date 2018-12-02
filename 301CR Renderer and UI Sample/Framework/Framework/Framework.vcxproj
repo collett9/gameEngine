@@ -133,6 +133,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="physicsSync.cpp" />
     <ClCompile Include="renderer.cpp" />
+    <ClCompile Include="wallObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="eventMove.h" />
@@ -141,6 +142,7 @@
     <ClInclude Include="gameObject.h" />
     <ClInclude Include="physicsSync.h" />
     <ClInclude Include="renderer.h" />
+    <ClInclude Include="wallObject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
