@@ -3,6 +3,24 @@
 int playerId = 1;
 
 
+void game::levelSetup(int SizeX, int SizeY)
+{
+	level newLevel = level(SizeX, SizeY);
+	
+	for (int i = 0; i < SizeX; i++)
+	{
+		for (int j = 0; j < SizeY; j++)
+		{
+			if (newLevel.levelData[i][j].whichChunk == level::wall)
+			{
+				gameObjectsVector.push_back(new wallObject(b2Vec2(newLevel.levelData[i][j].actualPositionX, newLevel.levelData[i][j].actualPositionY)));
+			}
+		}
+	}
+
+}
+
+
 void game::setUp(std::string windowName, int Width, int Height)
 {
 	physics = new physicsSync(0.0f, 0.0f);
@@ -20,6 +38,8 @@ void game::setUp(std::string windowName, int Width, int Height)
 
 	wallObject* object3 = new wallObject(b2Vec2(1000.0f, 1000.0f));
 	gameObjectsVector.push_back(object3);
+	
+	levelSetup(15, 15);
 
 
 	// could be an issue here in the future with objects not updating!

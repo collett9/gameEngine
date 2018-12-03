@@ -130,6 +130,7 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gameEvent.cpp" />
     <ClCompile Include="gameObject.cpp" />
+    <ClCompile Include="level.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="physicsSync.cpp" />
     <ClCompile Include="renderer.cpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="gameEvent.h" />
     <ClInclude Include="gameObject.h" />
+    <ClInclude Include="level.h" />
     <ClInclude Include="physicsSync.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="wallObject.h" />

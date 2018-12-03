@@ -11,15 +11,11 @@
 #include "gameEvent.h"
 #include "eventMove.h"
 #include "wallObject.h"
+#include "level.h"
 
 class game
 {
 public:
-	sf::RectangleShape groundShape;
-	sf::RectangleShape texturedShape;
-	sf::CircleShape shape = sf::CircleShape(100.f);
-
-
 	
 	//physicsSync test = physicsSync(0.0f, 0.0f);
 
@@ -39,6 +35,8 @@ public:
 	int32 positionIterations = 2;
 
 	sf::Event e;
+
+	void levelSetup(int SizeX, int SizeY);
 
 	void setUp(std::string windowName, int Width, int Height);
 	void update();

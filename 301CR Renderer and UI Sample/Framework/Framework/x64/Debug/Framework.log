@@ -1,9 +1,2 @@
-﻿  eventMove.cpp
-  game.cpp
-c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\game.cpp(14): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\game.cpp(18): warning C4305: 'argument': truncation from 'double' to 'float'
-  gameEvent.cpp
-  main.cpp
-  physicsSync.cpp
-  Generating Code...
+﻿  level.cpp
   Framework.vcxproj -> C:\Users\liamc\Documents\GitHub\gameEngine\301CR Renderer and UI Sample\Framework\x64\Debug\Framework.exe
