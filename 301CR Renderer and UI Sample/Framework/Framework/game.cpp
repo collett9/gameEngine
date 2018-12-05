@@ -1,8 +1,8 @@
 #include "game.h"
 
-int playerId = 1;
+int playerId = 0;
 
-
+// creating a level out of game objects using game level data produced in the level class
 void game::levelSetup(int SizeX, int SizeY)
 {
 	level newLevel = level(SizeX, SizeY);
@@ -11,6 +11,14 @@ void game::levelSetup(int SizeX, int SizeY)
 	{
 		for (int j = 0; j < SizeY; j++)
 		{
+			if (newLevel.levelData[i][j].whichChunk == level::playerLocation)
+			{
+				gameObject* object2 = new gameObject();
+				object2->setup(b2Vec2(newLevel.levelData[i][j].actualPositionX, newLevel.levelData[i][j].actualPositionY), 0, 10, 10, sf::Color::Yellow, 0.3, 0.3, 0.3, false);
+				gameObjectsVector.push_back(object2);
+				playerId = gameObjectsVector.size() - 1;
+			}
+
 			if (newLevel.levelData[i][j].whichChunk == level::wall)
 			{
 				gameObjectsVector.push_back(new wallObject(b2Vec2(newLevel.levelData[i][j].actualPositionX, newLevel.levelData[i][j].actualPositionY)));
@@ -27,19 +35,19 @@ void game::setUp(std::string windowName, int Width, int Height)
 
 	rendererGame = new renderer();
 
-	//add gameObjects here!
-	gameObject* object1 = new gameObject();
-	object1->setup(b2Vec2(500, 500), 0, 50, 50, sf::Color::Black, 0.3, 0.3, 0.3, true);
-	gameObjectsVector.push_back(object1);
-
-	gameObject* object2 = new gameObject();
-	object2->setup(b2Vec2(600, 600), 0, 10, 10, sf::Color::Yellow, 0.3, 0.3, 0.3, false);
-	gameObjectsVector.push_back(object2);
-
-	wallObject* object3 = new wallObject(b2Vec2(1000.0f, 1000.0f));
-	gameObjectsVector.push_back(object3);
-	
 	levelSetup(15, 15);
+
+	//add gameObjects here!
+	//gameObject* object1 = new gameObject();
+	//object1->setup(b2Vec2(500, 500), 0, 50, 50, sf::Color::Black, 0.3, 0.3, 0.3, true);
+	//gameObjectsVector.push_back(object1);
+
+
+
+	//wallObject* object3 = new wallObject(b2Vec2(1000.0f, 1000.0f));
+	//gameObjectsVector.push_back(object3);
+	//
+
 
 
 	// could be an issue here in the future with objects not updating!

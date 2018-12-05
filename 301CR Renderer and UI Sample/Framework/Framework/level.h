@@ -1,9 +1,13 @@
 #pragma once
 #include <vector>
+#include <iostream>
+#include <SFML\Graphics.hpp>
+#include <string>
 
 class level
 {
 public:
+
 
 	int sizeX;
 	int sizeY;
@@ -31,7 +35,11 @@ public:
 
 
 	level(int SizeX, int SizeY);
+
 	~level();
+
+	void setupImage(std::string fileName);
+
 
 private:
 	float sizeBetweenObjects = 50;

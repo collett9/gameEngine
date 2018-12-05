@@ -70,8 +70,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)../SFML-2.5.0/include;C:\Users\liamc\Downloads\301CR Renderer and UI Sample Extract 2\301CR Renderer and UI Sample\Framework\Framework\include</IncludePath>
-    <LibraryPath>C:\Users\liamc\Downloads\301CR Renderer and UI Sample Extract 2\301CR Renderer and UI Sample\Box2D;$(SolutionDir)../SFML-2.5.0/lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)../Framework/Framework/include;$(SolutionDir)../SFML-2.5.0/include</IncludePath>
+    <LibraryPath>$(SolutionDir)../Framework/Framework/Box2D;$(SolutionDir)../Framework/Framework/FreeImage;$(SolutionDir)../SFML-2.5.0/lib;$(LibraryPath)</LibraryPath>
     <ReferencePath>$(VC_ReferencesPath_x64);</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -79,23 +79,34 @@
     <LibraryPath>$(SolutionDir)../SFML-2.5.0/lib;$(LibraryPath)</LibraryPath>
     <ReferencePath>$(VC_ReferencesPath_x64);</ReferencePath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\liamc\Documents\GitHub\gameEngine\301CR Renderer and UI Sample\Framework\Framework\include\glm-0.9.6.3;C:\Users\liamc\Downloads\301CR Renderer and UI Sample Extract 2\301CR Renderer and UI Sample\Framework\Framework\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../Framework/Framework/include/glm-0.9.6.3;$(SolutionDir)../Framework/Framework/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;sfml-system-d.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>include</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;sfml-system-d.lib;Box2D.lib;portaudio_x86.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)../Framework/Framework/include</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -126,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="audioSystem.cpp" />
     <ClCompile Include="eventMove.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gameEvent.cpp" />
@@ -137,6 +149,7 @@
     <ClCompile Include="wallObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="audioSystem.h" />
     <ClInclude Include="eventMove.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="gameEvent.h" />
