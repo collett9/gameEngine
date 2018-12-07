@@ -39,12 +39,13 @@ sf::RenderWindow* gameWindow = nullptr;
 
 void main()
 {
-	gameWindow = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Game Window");
-
+	
 	game1 = new game();
 
+	
 	game1->setUp("TestGame", 1920, 1080);
-	game1->rendererGame->attachWindow(gameWindow);
+	//game1->rendererGame->attachWindow(gameWindow);
+
 
 
 

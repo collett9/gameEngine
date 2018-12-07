@@ -1,21 +1,5 @@
 #include "level.h"
 
-//void read_image(const char* img)
-//{
-//	FREE_IMAGE_FORMAT fif = FreeImage_GetFIFFromFilename(img);
-//	FIBITMAP *bmp = FreeImage_Load(fif, img);
-//
-//	unsigned width = FreeImage_GetWidth(bmp);
-//	unsigned height = FreeImage_GetHeight(bmp);
-//	int bpp = FreeImage_GetBPP(bmp);
-//
-//	FIBITMAP* bitmap = FreeImage_Allocate(width, height, bpp);
-//	RGBQUAD color; FreeImage_GetPixelColor(bitmap, 10, 10, &color);
-//
-//}
-
-
-
 
 level::level(int SizeX, int SizeY)
 {
@@ -29,7 +13,7 @@ level::level(int SizeX, int SizeY)
 	setupImage("test.png");
 
 
-
+	// setting up the grid of level data positions
 	for (int i = 0; i < SizeX; i++)
 	{
 		for (int j = 0; j < SizeY; j++)
@@ -44,8 +28,8 @@ level::level(int SizeX, int SizeY)
 				levelData[i][j].whichChunk = nothing;
 			}*/
 
-			levelData[i][j].actualPositionX = i * sizeBetweenObjects;
-			levelData[i][j].actualPositionY = j * sizeBetweenObjects;
+			levelData[i][j].actualPositionX = i * sizeBetweenObjects + sizeBetweenObjects/2;
+			levelData[i][j].actualPositionY = j * sizeBetweenObjects+ sizeBetweenObjects/2;
 		}
 	}
 
@@ -57,7 +41,7 @@ level::~level()
 {
 }
 
-// goes through an image and fetches colour data, translating it into map data
+// goes through an image and fetches colour data, translating it into map data --- perhaps move this elsewhere later
 void level::setupImage(std::string fileName)
 {
 	sf::Image testImage;

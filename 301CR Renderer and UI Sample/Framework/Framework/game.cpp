@@ -2,40 +2,17 @@
 
 int playerId = 0;
 
-// creating a level out of game objects using game level data produced in the level class
-void game::levelSetup(int SizeX, int SizeY)
-{
-	level newLevel = level(SizeX, SizeY);
-	
-	for (int i = 0; i < SizeX; i++)
-	{
-		for (int j = 0; j < SizeY; j++)
-		{
-			if (newLevel.levelData[i][j].whichChunk == level::playerLocation)
-			{
-				gameObject* object2 = new gameObject();
-				object2->setup(b2Vec2(newLevel.levelData[i][j].actualPositionX, newLevel.levelData[i][j].actualPositionY), 0, 10, 10, sf::Color::Yellow, 0.3, 0.3, 0.3, false);
-				gameObjectsVector.push_back(object2);
-				playerId = gameObjectsVector.size() - 1;
-			}
 
-			if (newLevel.levelData[i][j].whichChunk == level::wall)
-			{
-				gameObjectsVector.push_back(new wallObject(b2Vec2(newLevel.levelData[i][j].actualPositionX, newLevel.levelData[i][j].actualPositionY)));
-			}
-		}
-	}
-
-}
 
 
 void game::setUp(std::string windowName, int Width, int Height)
 {
 	physics = new physicsSync(0.0f, 0.0f);
 
-	rendererGame = new renderer();
+	
 
 	levelSetup(15, 15);
+
 
 	//add gameObjects here!
 	//gameObject* object1 = new gameObject();
@@ -65,9 +42,45 @@ void game::setUp(std::string windowName, int Width, int Height)
 	}
 
 
+
 	physics->physicsSetup();
 
 
+}
+
+// creating a level out of game objects using game level data produced in the level class
+void game::levelSetup(int SizeX, int SizeY)
+{
+
+
+	level newLevel = level(SizeX, SizeY);
+
+
+	for (int i = 0; i < SizeX; i++)
+	{
+		for (int j = 0; j < SizeY; j++)
+		{
+			if (newLevel.levelData[i][j].whichChunk == level::playerLocation)
+			{
+				gameObject* object2 = new gameObject();
+				object2->setup(b2Vec2(newLevel.levelData[i][j].actualPositionX, newLevel.levelData[i][j].actualPositionY), 0, 10, 10, sf::Color::Yellow, 0.3, 0.3, 0.3, false);
+			//	object2->gameObjectShape.setOrigin(newLevel.levelData[i][j].actualPositionX, newLevel.levelData[i][j].actualPositionY);
+				gameObjectsVector.push_back(object2);
+				playerId = gameObjectsVector.size() - 1;
+			}
+
+			if (newLevel.levelData[i][j].whichChunk == level::wall)
+			{
+				gameObjectsVector.push_back(new wallObject(b2Vec2(newLevel.levelData[i][j].actualPositionX, newLevel.levelData[i][j].actualPositionY)));
+			}
+		}
+	}
+	
+	rendererGame = new renderer("Level1", 1920, 1080);
+	//rendererGame->gameWindow->setView()
+	rendererGame->gameWindow->setSize(sf::Vector2u(newLevel.sizeBetweenObjects*newLevel.levelData.size(), newLevel.sizeBetweenObjects*newLevel.levelData.size()));
+	//rendererGame->gameWindow.
+	
 }
 
 void game::update()
@@ -176,6 +189,12 @@ void game::inputHandler()
 		{
 			rendererGame->gameWindow->close();
 		}
+	}
+	if (e.type == sf::Event::Resized)
+	{
+		// update the view to the new size of the window
+		sf::FloatRect visibleArea(0, 0, e.size.width, e.size.height);
+		rendererGame->gameWindow->setView(sf::View(visibleArea));
 	}
 
 }

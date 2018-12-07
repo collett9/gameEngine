@@ -40,8 +40,8 @@ public:
 
 	void setupImage(std::string fileName);
 
+	sf::Image testImage;
 
-private:
 	float sizeBetweenObjects = 50;
 };
 

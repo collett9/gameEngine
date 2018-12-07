@@ -7,15 +7,17 @@
 
 
 
+
 class renderer
 {
 public:
 
+	sf::RenderWindow pointerWindow;
 	sf::RenderWindow* gameWindow;
 
-	renderer();
+	renderer(std::string windowName, int Width, int Height);
 
-	void attachWindow(sf::RenderWindow* GameWindow);
+
 
 	void updateRenderer(std::vector<gameObject*> gameObjectVector, std::vector<b2Vec2> positionVectors, std::vector<float> rotationVectors, std::vector<b2Vec2> sizeVectors);
 

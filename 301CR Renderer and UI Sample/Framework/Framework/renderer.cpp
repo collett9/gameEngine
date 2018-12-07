@@ -2,15 +2,19 @@
 
 
 
-renderer::renderer()
+
+renderer::renderer(std::string windowName, int Width, int Height)
 {
+	//pointerWindow.
+	//pointerWindow.setSize(sf::Vector2u(Width, Height));
+	//pointerWindow.setTitle(windowName);
+
+	//gameWindow = &pointerWindow;
+
+	gameWindow = new sf::RenderWindow(sf::VideoMode(Width, Height), windowName);
 }
 
-void renderer::attachWindow(sf::RenderWindow * GameWindow)
-{
-	gameWindow = GameWindow;
 
-}
 
 void renderer::updateRenderer(std::vector<gameObject*> gameObjectsVector, std::vector<b2Vec2> positionVectors, std::vector<float> rotationVectors, std::vector <b2Vec2> sizeVectors)
 {
