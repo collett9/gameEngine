@@ -70,8 +70,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)../Framework/Framework/include;$(SolutionDir)../SFML-2.5.0/include</IncludePath>
-    <LibraryPath>$(SolutionDir)../Framework/Framework/Box2D;$(SolutionDir)../Framework/Framework/FreeImage;$(SolutionDir)../SFML-2.5.0/lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)../Framework/Framework/include;$(SolutionDir)../FMOD/api/fsbank/inc;$(SolutionDir)../FMOD/api/lowlevel/inc;$(SolutionDir)../FMOD/api/studio/inc;$(SolutionDir)../SFML-2.5.0/include</IncludePath>
+    <LibraryPath>$(SolutionDir)../Framework/Framework/Box2D;$(SolutionDir)../Framework/Framework/FreeImage;$(SolutionDir)../SFML-2.5.0/lib;$(SolutionDir)../FMOD/api/fsbank/lib;$(SolutionDir)../FMOD/api/lowlevel/lib;$(SolutionDir)../FMOD/api/studio/lib;$(LibraryPath)</LibraryPath>
     <ReferencePath>$(VC_ReferencesPath_x64);</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -105,7 +105,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)../Framework/Framework/include/glm-0.9.6.3;$(SolutionDir)../Framework/Framework/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;sfml-system-d.lib;Box2D.lib;portaudio_x86.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;sfml-system-d.lib;Box2D.lib;fmod64_vc.lib;fmodL64_vc.lib;fmodstudio64_vc.lib;fmodstudioL64_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)../Framework/Framework/include</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>

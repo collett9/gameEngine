@@ -9,7 +9,9 @@ void game::setUp(std::string windowName, int Width, int Height)
 {
 	physics = new physicsSync(0.0f, 0.0f);
 
-	
+	audioSystemGame = new audioSystem();
+
+	audioSystemGame->loadSound("meow.wav");
 
 	levelSetup(15, 15);
 
@@ -171,12 +173,14 @@ void game::inputHandler()
 			//texturedShape.move(sf::Vector2f(0.0f, 0.5f));
 			//physics.physicsBodies[1]->ApplyForce(b2Vec2(0, -1), b2Vec2(position.x + 5, position.y + 5), 1);
 
+			audioSystemGame->playAudio(1);
+
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		{
 			char test = sf::Keyboard::Key();
-
+			//audioSystemGame->playAudio("ahem_x.wav");
 			//gameObjectsVector.pop_back();
 			//delete gameObjectsVector.front();
 			//gameObjectsVector.resize(gameObjectsVector.size() - 1);

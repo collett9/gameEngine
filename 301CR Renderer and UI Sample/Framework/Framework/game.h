@@ -12,6 +12,7 @@
 #include "eventMove.h"
 #include "wallObject.h"
 #include "level.h"
+#include "audioSystem.h"
 
 class game
 {
@@ -20,6 +21,8 @@ public:
 	//physicsSync test = physicsSync(0.0f, 0.0f);
 
 	physicsSync *physics = nullptr;
+
+	audioSystem *audioSystemGame = nullptr;
 
 	renderer *rendererGame = nullptr;
 

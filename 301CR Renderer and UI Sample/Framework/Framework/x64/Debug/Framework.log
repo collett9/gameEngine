@@ -1,6 +1,2 @@
-﻿  game.cpp
-c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\game.cpp(66): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\game.cpp(69): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\game.cpp(81): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\game.cpp(196): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+﻿  audioSystem.cpp
   Framework.vcxproj -> C:\Users\liamc\Documents\GitHub\gameEngine\301CR Renderer and UI Sample\Framework\x64\Debug\Framework.exe
