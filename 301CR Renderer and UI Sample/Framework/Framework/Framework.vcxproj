@@ -137,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="audioEvent.cpp" />
     <ClCompile Include="audioSystem.cpp" />
     <ClCompile Include="eventMove.cpp" />
     <ClCompile Include="game.cpp" />
@@ -149,6 +150,7 @@
     <ClCompile Include="wallObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="audioEvent.h" />
     <ClInclude Include="audioSystem.h" />
     <ClInclude Include="eventMove.h" />
     <ClInclude Include="game.h" />

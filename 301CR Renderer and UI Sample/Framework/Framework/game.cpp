@@ -13,6 +13,8 @@ void game::setUp(std::string windowName, int Width, int Height)
 
 	audioSystemGame->loadSound("meow.wav");
 
+	audioSystemGame->loadSound("ahem_x.wav");
+
 	levelSetup(15, 15);
 
 
@@ -104,9 +106,14 @@ void game::eventHandler()
 	{
 		for (int j = 0; j < gameEventsVector[i]->whichSubsystemsInvovlved.size(); j++)
 		{
-			if (gameEventsVector[i]->whichSubsystemsInvovlved[j] == gameEvent::Physics)
+			if (gameEventsVector[i]->whichSubsystemsInvovlved.size() > 0 && gameEventsVector[i]->whichSubsystemsInvovlved[j] == gameEvent::Physics)
 			{
 				physics->physicsEventSolver(gameEventsVector[i]);
+			}
+
+			if (gameEventsVector[i]->whichSubsystemsInvovlved.size() > 0 && gameEventsVector[i]->whichSubsystemsInvovlved[j] == gameEvent::Audio)
+			{
+				audioSystemGame->audioEventSolver(gameEventsVector[i]);
 			}
 		}
 
@@ -173,7 +180,8 @@ void game::inputHandler()
 			//texturedShape.move(sf::Vector2f(0.0f, 0.5f));
 			//physics.physicsBodies[1]->ApplyForce(b2Vec2(0, -1), b2Vec2(position.x + 5, position.y + 5), 1);
 
-			audioSystemGame->playAudio(1);
+			//audioSystemGame->playAudio("meow.wav");
+			gameEventsVector.push_back(new gameEvent(audioEvent(0)));
 
 		}
 
@@ -186,7 +194,7 @@ void game::inputHandler()
 			//gameObjectsVector.resize(gameObjectsVector.size() - 1);
 			//texturedShape.move(sf::Vector2f(0.0f, 0.5f));
 			//physics.physicsBodies[1]->ApplyForce(b2Vec2(0, -1), b2Vec2(position.x + 5, position.y + 5), 1);
-
+			gameEventsVector.push_back(new gameEvent(audioEvent(1)));
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))

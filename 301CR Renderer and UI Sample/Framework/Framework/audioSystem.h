@@ -3,6 +3,7 @@
 #include <fmod.hpp>
 #include <string>
 #include <vector>
+#include "gameEvent.h"
 
 class audioSystem
 {
@@ -14,11 +15,14 @@ public:
 	FMOD::Sound* meow = NULL;
 
 	std::vector <FMOD::Sound*> gameSounds;
+	std::vector <int> soundIds;
 
 	audioSystem();
 	~audioSystem();
 	void loadSound(char fileName[]);
-	void playAudio(int soundID);
+	//void playAudio(std::string soundName);
+	void playAudio(int soundIdToPlay);
+	void audioEventSolver(gameEvent * gameEventToSolve);
 	//void playAudio(std::string soundFilename);
 };
 

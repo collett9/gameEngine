@@ -15,6 +15,7 @@ public:
 	enum eventTypes
 	{
 		movement,
+		audio,
 		another
 
 

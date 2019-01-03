@@ -13,6 +13,7 @@
 #include "wallObject.h"
 #include "level.h"
 #include "audioSystem.h"
+#include "audioEvent.h"
 
 class game
 {

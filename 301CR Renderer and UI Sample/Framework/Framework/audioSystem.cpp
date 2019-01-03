@@ -1,6 +1,8 @@
 #include "audioSystem.h"
 #include <iostream>
 
+
+//fmod and channel setup.
 audioSystem::audioSystem()
 {
 
@@ -24,10 +26,6 @@ audioSystem::audioSystem()
 
 	lowLevelSystem->setSoftwareFormat(0, FMOD_SPEAKERMODE_STEREO, 0);
 	system->initialize(1024, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, NULL);
-
-
-
-
 }
 
 
@@ -35,6 +33,8 @@ audioSystem::~audioSystem()
 {
 }
 
+
+// loads a wav file into an fmod sound, there is a vector of sounds with a correspoonding vector of sound names to allow for easy use of these sound effects later on.
 void audioSystem::loadSound(char fileName[])
 {
 	FMOD::Sound* newSound = NULL;
@@ -44,15 +44,14 @@ void audioSystem::loadSound(char fileName[])
 	//newSound.setdef
 
 	gameSounds.push_back(newSound);
-
+	//gameSoundNames.push_back(fileName);
 
 }
 
 
-
-void audioSystem::playAudio(int soundId)
+//This function plays a sound based on the soundID of the currently loaded sound effects.
+void audioSystem::playAudio(int soundIdToPlay)
 {
-	
 
 	//lowLevelSystem->createSound(soundName, FMOD_LOOP_OFF, NULL, &meow);
 	//"meow.wav" backup
@@ -65,15 +64,41 @@ void audioSystem::playAudio(int soundId)
 	//}
 
 
-	if (soundId < gameSounds.size())
+	for (int i = 0; i < gameSounds.size(); i++)
 	{
-		lowLevelSystem->playSound(gameSounds[soundId], NULL, false, &catChannel);
+		if (i == soundIdToPlay)
+		{
+			lowLevelSystem->playSound(gameSounds[i], NULL, false, &catChannel);
+		}
 	}
 
-	else 
-	{
-		std::cout << "The sound is not loaded!" << "\n";
-	}
+
+
+	//if (soundId < gameSounds.size())
+	//{
+	//	
+	//}
+
+	//else 
+	//{
+	//	std::cout << "The sound is not loaded!" << "\n";
+	//}
 
 	meow = NULL;
+}
+
+void audioSystem::audioEventSolver(gameEvent * gameEventToSolve)
+{
+	
+	
+
+	if (gameEventToSolve->eventType == gameEvent::audio)
+	{
+		//std::string fileNameToUse = *(std::string*)gameEventToSolve->testBin->eventVoidPointerVector[0];
+		int soundIdToUse = *(int*)gameEventToSolve->testBin->eventVoidPointerVector[0];
+
+		playAudio(soundIdToUse);
+	}
+
+	gameEventToSolve->whichSubsystemsInvovlved.pop_back();
 }
