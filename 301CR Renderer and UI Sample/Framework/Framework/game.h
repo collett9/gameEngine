@@ -45,6 +45,7 @@ public:
 
 	void setUp(std::string windowName, int Width, int Height);
 	void gameObjectsSetup();
+	void gameObjectsCollide();
 	void levelSetup(int SizeX, int SizeY, std::string imageFileName);
 	void update();
 	void eventHandler();

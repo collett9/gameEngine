@@ -2,7 +2,7 @@
 
 
 // adds physics object to the scene, currently only adds a box ADD MORE TYPES
-void physicsSync::addPhysicsObject(float positionX, float positionY, float hitBoxSizeX, float hitBoxSizeY, float density, float friction, float linearDamping, bool isStatic)
+void physicsSync::addPhysicsObject(float positionX, float positionY, float hitBoxSizeX, float hitBoxSizeY, float density, float friction, float linearDamping, bool isStatic, int nameOfObject)
 {
 	if (isStatic == true)
 	{
@@ -22,6 +22,10 @@ void physicsSync::addPhysicsObject(float positionX, float positionY, float hitBo
 		physicsBodies.back()->CreateFixture(&fixtureDef);
 		physicsBodies.back()->SetLinearDamping(linearDamping);
 
+		void* egge1 = new void*;
+		memcpy(egge1, &nameOfObject, sizeof(nameOfObject));
+		physicsBodies.back()->SetUserData(egge1);
+		
 		//sizeVectors.push_back(b2Vec2(hitBoxSizeX, hitBoxSizeY));
 	}
 
@@ -42,6 +46,9 @@ void physicsSync::addPhysicsObject(float positionX, float positionY, float hitBo
 		fixtureDef.friction = friction;
 		physicsBodies.back()->CreateFixture(&fixtureDef);
 		physicsBodies.back()->SetLinearDamping(linearDamping);
+		void* egge1 = new void*;
+		memcpy(egge1, &nameOfObject, sizeof(nameOfObject));
+		physicsBodies.back()->SetUserData(egge1);
 
 		//sizeVectors.push_back(b2Vec2(hitBoxSizeX, hitBoxSizeY));
 	}
@@ -67,6 +74,11 @@ void physicsSync::physicsSetup()
 		rotationVectors[i] = physicsBodies[i]->GetAngle();
 	}
 
+
+	
+	world->SetContactListener(&listener);
+
+
 }
 
 
@@ -85,6 +97,31 @@ void physicsSync::physicsUpdate(float32 timeStep, int32 velocityIterations, int3
 		positionVectors[i] = b2Vec2(physicsBodies[i]->GetPosition().x , physicsBodies[i]->GetPosition().y );
 		rotationVectors[i] = physicsBodies[i]->GetAngle();
 	}
+
+	b2Body *egg1;
+	b2Body *egg2;
+	
+	bool testedForCollisions = false;
+
+	//if (testedForCollisions == false) {
+	//	for (b2Contact* contact = world->GetContactList(); contact; contact->GetNext())
+	//	{
+	//		//std::cout << "egg" << std::endl;
+	//		//if(contact.fi)
+	//		b2Fixture *tempFixture;
+	//		b2Fixture *tempFixture2;
+
+
+	//		tempFixture = contact->GetFixtureA();
+	//		egg1 = contact->GetFixtureA()->GetBody();
+	//		egg2 = contact->GetFixtureB()->GetBody();
+
+	//		testedForCollisions = true;
+	//		//fixturesHit.push_back(contact->GetFixtureA());
+	//	}
+	//	
+	//}
+
 
 }
 

@@ -47,14 +47,39 @@ void game::gameObjectsSetup()
 	{
 		//adding all of the gameobject data into the physics susbsystem for it to create physics objects based on it
 		//ADDED THIS
-		physics->addPhysicsObject(gameObjectsVector[i]->position.x, gameObjectsVector[i]->position.y, gameObjectsVector[i]->sizeX, gameObjectsVector[i]->sizeY, gameObjectsVector[i]->density, gameObjectsVector[i]->friction, gameObjectsVector[i]->linearDamping, gameObjectsVector[i]->IsStatic);
+		
 
 
 		physics->positionVectors.push_back(gameObjectsVector[i]->position);
 		physics->rotationVectors.push_back(gameObjectsVector[i]->rotation);
 		physics->sizeVectors.push_back(b2Vec2(gameObjectsVector[i]->sizeX, gameObjectsVector[i]->sizeY));
 		gameObjectsVector[i]->gameObjectId = i;
+
+		physics->addPhysicsObject(gameObjectsVector[i]->position.x, gameObjectsVector[i]->position.y, gameObjectsVector[i]->sizeX, gameObjectsVector[i]->sizeY, gameObjectsVector[i]->density, gameObjectsVector[i]->friction, gameObjectsVector[i]->linearDamping, gameObjectsVector[i]->IsStatic, gameObjectsVector[i]->gameObjectId);
 	}
+}
+
+
+// function to deal with the collision of the various gameobjects within the scene
+void game::gameObjectsCollide()
+{
+
+	if (physics->listener.data1 == playerId && gameObjectsVector[physics->listener.data2]->gameObjectName == "enemy")
+	{
+			std::cout << "egg" << std::endl;
+		
+	}
+
+	if (physics->listener.data1 == physics->listener.data3 && physics->listener.data2 == physics->listener.data4)
+	{
+		physics->listener.data1 = NULL;
+		physics->listener.data2 = NULL;
+		physics->listener.data3 = NULL;
+		physics->listener.data4 = NULL;
+	}
+
+
+	
 }
 
 // creating a level out of game objects using game level data produced in the level class
@@ -148,6 +173,8 @@ void game::levelSetup(int SizeX, int SizeY, std::string imageFileName)
 void game::update()
 {
 	physics->physicsUpdate(1.0f / 60.0f, 6, 2);
+
+	gameObjectsCollide();
 
 	rendererGame->updateRenderer(gameObjectsVector, physics->positionVectors, physics->rotationVectors, physics->sizeVectors);
 
