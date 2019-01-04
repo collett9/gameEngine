@@ -15,7 +15,7 @@ void game::setUp(std::string windowName, int Width, int Height)
 
 	audioSystemGame->loadSound("ahem_x.wav");
 
-	levelSetup(15, 15);
+	levelSetup(15, 15, "test.png");
 
 
 	//add gameObjects here!
@@ -31,20 +31,8 @@ void game::setUp(std::string windowName, int Width, int Height)
 
 
 
-	// could be an issue here in the future with objects not updating!
-	for (int i = 0; i < gameObjectsVector.size(); i++)
-	{
-		//adding all of the gameobject data into the physics susbsystem for it to create physics objects based on it
-		//ADDED THIS
-		physics->addPhysicsObject(gameObjectsVector[i]->position.x, gameObjectsVector[i]->position.y, gameObjectsVector[i]->sizeX, gameObjectsVector[i]->sizeY, gameObjectsVector[i]->density, gameObjectsVector[i]->friction, gameObjectsVector[i]->linearDamping, gameObjectsVector[i]->IsStatic);
-		
-		
-		physics->positionVectors.push_back(gameObjectsVector[i]->position);
-		physics->rotationVectors.push_back(gameObjectsVector[i]->rotation);
-		physics->sizeVectors.push_back(b2Vec2(gameObjectsVector[i]->sizeX, gameObjectsVector[i]->sizeY));
-		gameObjectsVector[i]->gameObjectId = i;
-	}
 
+	//gameObjectsSetup();
 
 
 	physics->physicsSetup();
@@ -52,12 +40,60 @@ void game::setUp(std::string windowName, int Width, int Height)
 
 }
 
-// creating a level out of game objects using game level data produced in the level class
-void game::levelSetup(int SizeX, int SizeY)
+void game::gameObjectsSetup()
 {
+	// could be an issue here in the future with objects not updating!
+	for (int i = 0; i < gameObjectsVector.size(); i++)
+	{
+		//adding all of the gameobject data into the physics susbsystem for it to create physics objects based on it
+		//ADDED THIS
+		physics->addPhysicsObject(gameObjectsVector[i]->position.x, gameObjectsVector[i]->position.y, gameObjectsVector[i]->sizeX, gameObjectsVector[i]->sizeY, gameObjectsVector[i]->density, gameObjectsVector[i]->friction, gameObjectsVector[i]->linearDamping, gameObjectsVector[i]->IsStatic);
 
 
-	level newLevel = level(SizeX, SizeY);
+		physics->positionVectors.push_back(gameObjectsVector[i]->position);
+		physics->rotationVectors.push_back(gameObjectsVector[i]->rotation);
+		physics->sizeVectors.push_back(b2Vec2(gameObjectsVector[i]->sizeX, gameObjectsVector[i]->sizeY));
+		gameObjectsVector[i]->gameObjectId = i;
+	}
+}
+
+// creating a level out of game objects using game level data produced in the level class
+void game::levelSetup(int SizeX, int SizeY, std::string imageFileName)
+{
+// wiping previous level's data  such as gameojects and related physics data
+
+	if (gameObjectsVector.size() > 0)
+	{	
+		for (int i = 0; i < gameObjectsVector.size(); i++)
+		{
+			delete gameObjectsVector[i];
+		}
+		gameObjectsVector.clear();
+	}
+
+	if (physics->physicsBodies.size() > 0)
+	{
+
+		physics->physicsBodies.clear();
+	}
+
+	if (physics->positionVectors.size() > 0)
+	{
+		physics->positionVectors.clear();
+	}
+
+	if (physics->rotationVectors.size() > 0)
+	{
+		physics->rotationVectors.clear();
+	}
+
+	if (physics->sizeVectors.size() > 0)
+	{
+		physics->sizeVectors.clear();
+	}
+
+
+	level newLevel = level(SizeX, SizeY, imageFileName);
 
 
 	for (int i = 0; i < SizeX; i++)
@@ -68,6 +104,7 @@ void game::levelSetup(int SizeX, int SizeY)
 			{
 				gameObject* object2 = new gameObject();
 				object2->setup(b2Vec2(newLevel.levelData[i][j].actualPositionX, newLevel.levelData[i][j].actualPositionY), 0, 10, 10, sf::Color::Yellow, 0.3, 0.3, 0.3, false);
+				object2->setNameOfObject("player");
 			//	object2->gameObjectShape.setOrigin(newLevel.levelData[i][j].actualPositionX, newLevel.levelData[i][j].actualPositionY);
 				gameObjectsVector.push_back(object2);
 				playerId = gameObjectsVector.size() - 1;
@@ -75,12 +112,33 @@ void game::levelSetup(int SizeX, int SizeY)
 
 			if (newLevel.levelData[i][j].whichChunk == level::wall)
 			{
-				gameObjectsVector.push_back(new wallObject(b2Vec2(newLevel.levelData[i][j].actualPositionX, newLevel.levelData[i][j].actualPositionY)));
+				gameObject* wallObject1 = (new wallObject(b2Vec2(newLevel.levelData[i][j].actualPositionX, newLevel.levelData[i][j].actualPositionY)));
+				wallObject1->setNameOfObject("wall");
+				gameObjectsVector.push_back(wallObject1);
+			}
+
+			if (newLevel.levelData[i][j].whichChunk == level::enemyLocation)
+			{
+				gameObject* enemyObject = (new Enemy(b2Vec2(newLevel.levelData[i][j].actualPositionX, newLevel.levelData[i][j].actualPositionY), 100));
+				enemyObject->setNameOfObject("enemy");
+				gameObjectsVector.push_back(enemyObject);
+
 			}
 		}
 	}
 	
-	rendererGame = new renderer("Level1", 1920, 1080);
+	if (rendererGame == NULL)
+	{
+		rendererGame = new renderer(imageFileName, 1920, 1080);
+
+	}
+
+	else {
+
+		rendererGame->gameWindow->setTitle(imageFileName);
+	}
+	gameObjectsSetup();
+
 	//rendererGame->gameWindow->setView()
 	rendererGame->gameWindow->setSize(sf::Vector2u(newLevel.sizeBetweenObjects*newLevel.levelData.size(), newLevel.sizeBetweenObjects*newLevel.levelData.size()));
 	//rendererGame->gameWindow.
@@ -93,10 +151,10 @@ void game::update()
 
 	rendererGame->updateRenderer(gameObjectsVector, physics->positionVectors, physics->rotationVectors, physics->sizeVectors);
 
-	
+	/*
 	b2Vec2 position = b2Vec2(physics->positionVectors[1].x, physics->positionVectors[1].y);
 	float32 angle = physics->rotationVectors[1];
-	printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
+	printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);*/
 
 }
 
@@ -195,6 +253,7 @@ void game::inputHandler()
 			//texturedShape.move(sf::Vector2f(0.0f, 0.5f));
 			//physics.physicsBodies[1]->ApplyForce(b2Vec2(0, -1), b2Vec2(position.x + 5, position.y + 5), 1);
 			gameEventsVector.push_back(new gameEvent(audioEvent(1)));
+			levelSetup(15, 15, "test1.png");
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))

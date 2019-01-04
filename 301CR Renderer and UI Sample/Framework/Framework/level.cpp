@@ -1,7 +1,7 @@
 #include "level.h"
 
 
-level::level(int SizeX, int SizeY)
+level::level(int SizeX, int SizeY, std::string fileName)
 {
 	levelData.resize(SizeX);
 	for (int i = 0; i < SizeX; i++)
@@ -10,7 +10,7 @@ level::level(int SizeX, int SizeY)
 
 	}
 
-	setupImage("test.png");
+	setupImage(fileName);
 
 
 	// setting up the grid of level data positions
@@ -68,9 +68,14 @@ void level::setupImage(std::string fileName)
 				levelData[i][j].whichChunk = wall;
 			}
 
-			else if(tempColourVector == sf::Vector3f(255.0f, 0.0f, 0.0f))
+			else if(tempColourVector == sf::Vector3f(0.0f, 255.0f, 0.0f))
 			{
 				levelData[i][j].whichChunk = playerLocation;
+			}
+
+			else if (tempColourVector == sf::Vector3f(255.0f, 0.0f, 0.0f))
+			{
+				levelData[i][j].whichChunk = enemyLocation;
 			}
 
 			else

@@ -17,7 +17,8 @@ public:
 	{
 		nothing,
 		wall,
-		playerLocation
+		playerLocation,
+		enemyLocation
 	};
 
 	struct levelChunk
@@ -34,7 +35,9 @@ public:
 
 
 
-	level(int SizeX, int SizeY);
+	//level(int SizeX, int SizeY);
+
+	level(int SizeX, int SizeY, std::string fileName);
 
 	~level();
 

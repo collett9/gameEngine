@@ -14,6 +14,7 @@
 #include "level.h"
 #include "audioSystem.h"
 #include "audioEvent.h"
+#include "Enemy.h"
 
 class game
 {
@@ -40,9 +41,11 @@ public:
 
 	sf::Event e;
 
-	void levelSetup(int SizeX, int SizeY);
+	//void levelSetup(int SizeX, int SizeY);
 
 	void setUp(std::string windowName, int Width, int Height);
+	void gameObjectsSetup();
+	void levelSetup(int SizeX, int SizeY, std::string imageFileName);
 	void update();
 	void eventHandler();
 	void inputHandler();

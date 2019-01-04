@@ -139,6 +139,7 @@
   <ItemGroup>
     <ClCompile Include="audioEvent.cpp" />
     <ClCompile Include="audioSystem.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="eventMove.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gameEvent.cpp" />
@@ -152,6 +153,7 @@
   <ItemGroup>
     <ClInclude Include="audioEvent.h" />
     <ClInclude Include="audioSystem.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="eventMove.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="gameEvent.h" />

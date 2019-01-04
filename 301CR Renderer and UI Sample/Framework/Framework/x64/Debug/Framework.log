@@ -1,6 +1,17 @@
-﻿  game.cpp
-c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\game.cpp(70): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\game.cpp(73): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\game.cpp(85): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\game.cpp(208): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+﻿  Enemy.cpp
+  audioEvent.cpp
+  audioSystem.cpp
+  eventMove.cpp
+  game.cpp
+c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\game.cpp(106): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\game.cpp(109): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\game.cpp(142): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\game.cpp(266): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+  gameEvent.cpp
+  gameObject.cpp
+  main.cpp
+  physicsSync.cpp
+  renderer.cpp
+  wallObject.cpp
+  Generating Code...
   Framework.vcxproj -> C:\Users\liamc\Documents\GitHub\gameEngine\301CR Renderer and UI Sample\Framework\x64\Debug\Framework.exe

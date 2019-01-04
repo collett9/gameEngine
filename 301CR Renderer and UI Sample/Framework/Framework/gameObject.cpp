@@ -35,6 +35,11 @@ void gameObject::setup(b2Vec2 Position, float Rotation, float SizeX, float SizeY
 	IsStatic = isStatic;
 }
 
+void gameObject::setNameOfObject(std::string name)
+{
+	gameObjectName = name;
+}
+
 gameObject::~gameObject()
 {
 }

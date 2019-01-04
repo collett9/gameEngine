@@ -12,4 +12,5 @@ wallObject::wallObject(b2Vec2 wallPosition)
 
 wallObject::~wallObject()
 {
+	delete this;
 }

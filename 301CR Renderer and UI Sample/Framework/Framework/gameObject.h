@@ -2,6 +2,7 @@
 #include <vector>
 #include <Box2D\Box2D.h>
 #include <SFML\Graphics.hpp>
+#include <string>
 //#include "physicsSync.h"
 
 
@@ -21,6 +22,7 @@ public:
 	float sizeY, sizeX;
 
 	sf::RectangleShape gameObjectShape;
+	std::string gameObjectName;
 
 	//void renderCreation(sf::Vector2f size, sf::Color colour, sf::Vector2f position, float outLineSize, sf::Color outlineColour);
 	//void physicsCreation(float positionX, float positionY, float sizeX, float sizeY, float desnity, float friction, float linearDamping, physicsSync physicsWorld, bool isStatic);
@@ -28,6 +30,7 @@ public:
 
 	gameObject();
 	void setup(b2Vec2 Position, float Rotation, float SizeX, float SizeY, sf::Color Colour, float Density, float Friction, float LinearDamping, bool isStatic);
+	void setNameOfObject(std::string name);
 
 	~gameObject();
 };

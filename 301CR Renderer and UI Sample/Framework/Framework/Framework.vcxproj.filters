@@ -48,6 +48,9 @@
     <ClCompile Include="audioEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="physicsSync.h">
@@ -78,6 +81,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="audioEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
