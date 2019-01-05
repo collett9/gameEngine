@@ -15,6 +15,9 @@
 #include "audioSystem.h"
 #include "audioEvent.h"
 #include "Enemy.h"
+#include "GUI.h"
+#include "GUIElement.h"
+#include "inputHandler.h"
 
 class game
 {
@@ -28,11 +31,18 @@ public:
 
 	renderer *rendererGame = nullptr;
 
+	renderer *rendererBattle = nullptr;
+
+	inputHandler *input = nullptr;
+
 	bool isGameWindowOpen;
 
 
 	std::vector <gameObject*> gameObjectsVector;
+	std::vector <gameObject*> battleMenuObjectVector;
 	std::vector <gameEvent*> gameEventsVector;
+
+	GUI gui;
 
 	float32 timeStep = 1.0f / 60.0f;
 
@@ -49,7 +59,7 @@ public:
 	void levelSetup(int SizeX, int SizeY, std::string imageFileName);
 	void update();
 	void eventHandler();
-	void inputHandler();
+	void inputHandlerGame();
 	void render();
 
 	game();

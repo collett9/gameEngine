@@ -4,12 +4,14 @@ int playerId = 0;
 
 
 
-
+//setting up renderer, physics as well as ui's
 void game::setUp(std::string windowName, int Width, int Height)
 {
 	physics = new physicsSync(0.0f, 0.0f);
 
 	audioSystemGame = new audioSystem();
+
+
 
 	audioSystemGame->loadSound("meow.wav");
 
@@ -17,6 +19,8 @@ void game::setUp(std::string windowName, int Width, int Height)
 
 	levelSetup(15, 15, "test.png");
 
+
+	gui.BattleGUISetup();
 
 	//add gameObjects here!
 	//gameObject* object1 = new gameObject();
@@ -36,8 +40,9 @@ void game::setUp(std::string windowName, int Width, int Height)
 
 
 	physics->physicsSetup();
+	input = new inputHandler();
 
-
+	input->setUpRenderer(rendererGame);
 }
 
 void game::gameObjectsSetup()
@@ -63,14 +68,32 @@ void game::gameObjectsSetup()
 // function to deal with the collision of the various gameobjects within the scene
 void game::gameObjectsCollide()
 {
+	if (physics->listener.data1 != NULL)
+	{
+		std::cout << "it do";
+	}
 
-	if (physics->listener.data1 == playerId && gameObjectsVector[physics->listener.data2]->gameObjectName == "enemy")
+	// if player gameobject collides with a gameobject with the name 'enemy'
+	if (physics->listener.data1 == playerId && gameObjectsVector[physics->listener.data2]->gameObjectName == "enemy" || physics->listener.data2 == playerId && gameObjectsVector[physics->listener.data1]->gameObjectName == "enemy")
 	{
 			std::cout << "egg" << std::endl;
+			rendererBattle = new renderer("FIGHT!", 1280, 720);
 		
 	}
 
+
+
+
+	//reseting the hit data after the player has moved away from it
 	if (physics->listener.data1 == physics->listener.data3 && physics->listener.data2 == physics->listener.data4)
+	{
+		physics->listener.data1 = NULL;
+		physics->listener.data2 = NULL;
+		physics->listener.data3 = NULL;
+		physics->listener.data4 = NULL;
+	}
+
+	else
 	{
 		physics->listener.data1 = NULL;
 		physics->listener.data2 = NULL;
@@ -178,6 +201,11 @@ void game::update()
 
 	rendererGame->updateRenderer(gameObjectsVector, physics->positionVectors, physics->rotationVectors, physics->sizeVectors);
 
+	/*if (rendererBattle != NULL)
+	{
+		rendererBattle->updateRenderer(gui.gameObjectsInGUI, )
+	}*/
+
 	/*
 	b2Vec2 position = b2Vec2(physics->positionVectors[1].x, physics->positionVectors[1].y);
 	float32 angle = physics->rotationVectors[1];
@@ -214,12 +242,13 @@ void game::eventHandler()
 	}
 }
 
-void game::inputHandler()
+void game::inputHandlerGame()
 {
 
-	rendererGame->gameWindow->pollEvent(e);
+	inputHandler::buttons whichButtonHasBeenPressed = input->whichKey();
 
-	if (e.type == sf::Event::Closed) {
+
+	if (whichButtonHasBeenPressed == inputHandler::closed) {
 		rendererGame->gameWindow->close();
 
 	}
@@ -235,72 +264,76 @@ void game::inputHandler()
 	and the window exits.
 	*/
 
-	if (e.type == sf::Event::KeyPressed)
+
+	if (whichButtonHasBeenPressed == inputHandler::leftArrow)
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		{
 
-			gameEventsVector.push_back(new gameEvent(eventMove(-50.0f, 0.0f, gameObjectsVector[playerId])));
-		}
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		{
-			gameEventsVector.push_back(new gameEvent(eventMove(50.0f, 0.0f, gameObjectsVector[playerId])));
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		{
-
-			gameEventsVector.push_back(new gameEvent(eventMove(0.0f, 50.0f, gameObjectsVector[playerId])));
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		{
-			gameEventsVector.push_back(new gameEvent(eventMove(0.0f, -50.0f, gameObjectsVector[playerId])));
-		}
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-		{
-			//gameObjectsVector.pop_back();
-			//delete gameObjectsVector.front();
-			//gameObjectsVector.resize(gameObjectsVector.size() - 1);
-			//texturedShape.move(sf::Vector2f(0.0f, 0.5f));
-			//physics.physicsBodies[1]->ApplyForce(b2Vec2(0, -1), b2Vec2(position.x + 5, position.y + 5), 1);
-
-			//audioSystemGame->playAudio("meow.wav");
-			gameEventsVector.push_back(new gameEvent(audioEvent(0)));
-
-		}
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		{
-			char test = sf::Keyboard::Key();
-			//audioSystemGame->playAudio("ahem_x.wav");
-			//gameObjectsVector.pop_back();
-			//delete gameObjectsVector.front();
-			//gameObjectsVector.resize(gameObjectsVector.size() - 1);
-			//texturedShape.move(sf::Vector2f(0.0f, 0.5f));
-			//physics.physicsBodies[1]->ApplyForce(b2Vec2(0, -1), b2Vec2(position.x + 5, position.y + 5), 1);
-			gameEventsVector.push_back(new gameEvent(audioEvent(1)));
-			levelSetup(15, 15, "test1.png");
-		}
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-		{
-			rendererGame->gameWindow->close();
-		}
+		gameEventsVector.push_back(new gameEvent(eventMove(-50.0f, 0.0f, gameObjectsVector[playerId])));
 	}
-	if (e.type == sf::Event::Resized)
+
+	if (whichButtonHasBeenPressed == inputHandler::rightArrow)
+	{
+		gameEventsVector.push_back(new gameEvent(eventMove(50.0f, 0.0f, gameObjectsVector[playerId])));
+	}
+	if (whichButtonHasBeenPressed == inputHandler::upArrow)
+	{
+
+		gameEventsVector.push_back(new gameEvent(eventMove(0.0f, 50.0f, gameObjectsVector[playerId])));
+	}
+	if (whichButtonHasBeenPressed == inputHandler::downArrow)
+	{
+		gameEventsVector.push_back(new gameEvent(eventMove(0.0f, -50.0f, gameObjectsVector[playerId])));
+	}
+
+	if (whichButtonHasBeenPressed == inputHandler::space)
+	{
+		//gameObjectsVector.pop_back();
+		//delete gameObjectsVector.front();
+		//gameObjectsVector.resize(gameObjectsVector.size() - 1);
+		//texturedShape.move(sf::Vector2f(0.0f, 0.5f));
+		//physics.physicsBodies[1]->ApplyForce(b2Vec2(0, -1), b2Vec2(position.x + 5, position.y + 5), 1);
+
+		//audioSystemGame->playAudio("meow.wav");
+		gameEventsVector.push_back(new gameEvent(audioEvent(0)));
+
+	}
+
+	if (whichButtonHasBeenPressed == inputHandler::W)
+	{
+		char test = sf::Keyboard::Key();
+		//audioSystemGame->playAudio("ahem_x.wav");
+		//gameObjectsVector.pop_back();
+		//delete gameObjectsVector.front();
+		//gameObjectsVector.resize(gameObjectsVector.size() - 1);
+		//texturedShape.move(sf::Vector2f(0.0f, 0.5f));
+		//physics.physicsBodies[1]->ApplyForce(b2Vec2(0, -1), b2Vec2(position.x + 5, position.y + 5), 1);
+		gameEventsVector.push_back(new gameEvent(audioEvent(1)));
+		levelSetup(15, 15, "test1.png");
+	}
+
+	if (whichButtonHasBeenPressed == inputHandler::escape)
+	{
+		rendererGame->gameWindow->close();
+	}
+
+	if (whichButtonHasBeenPressed == inputHandler::resized)
 	{
 		// update the view to the new size of the window
-		sf::FloatRect visibleArea(0, 0, e.size.width, e.size.height);
-		rendererGame->gameWindow->setView(sf::View(visibleArea));
-	}
 
+	}
 }
 
 void game::render()
 {
 	// use the renderer to render the gameObjects to the screen
 	rendererGame->renderToScreen(gameObjectsVector);
+
+	while(rendererBattle != NULL)
+	{ 
+		rendererBattle->renderToScreen(gui.gameObjectsInGUI);
+	
+	}
+	
 
 
 }

@@ -144,6 +144,9 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gameEvent.cpp" />
     <ClCompile Include="gameObject.cpp" />
+    <ClCompile Include="GUI.cpp" />
+    <ClCompile Include="GUIElement.cpp" />
+    <ClCompile Include="inputHandler.cpp" />
     <ClCompile Include="level.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="physicsSync.cpp" />
@@ -158,6 +161,9 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="gameEvent.h" />
     <ClInclude Include="gameObject.h" />
+    <ClInclude Include="GUI.h" />
+    <ClInclude Include="GUIElement.h" />
+    <ClInclude Include="inputHandler.h" />
     <ClInclude Include="level.h" />
     <ClInclude Include="physicsSync.h" />
     <ClInclude Include="renderer.h" />

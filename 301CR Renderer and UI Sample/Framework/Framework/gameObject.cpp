@@ -16,6 +16,7 @@ gameObject::gameObject()
 	
 }
 
+// setting up a physical game object
 void gameObject::setup(b2Vec2 Position, float Rotation, float SizeX, float SizeY, sf::Color Colour, float Density, float Friction, float LinearDamping, bool isStatic)
 {
 
@@ -33,6 +34,22 @@ void gameObject::setup(b2Vec2 Position, float Rotation, float SizeX, float SizeY
 	friction = Friction;
 	linearDamping = LinearDamping;
 	IsStatic = isStatic;
+}
+
+//setting up a non-physical game object
+void gameObject::setupForGui(b2Vec2 Position, float SizeX, float SizeY, sf::Color Colour)
+{
+	position = Position;
+	sizeX = SizeX;
+	sizeY = SizeY;
+
+	gameObjectShape.setSize(sf::Vector2f(SizeX * 2, SizeY * 2));
+	gameObjectShape.setFillColor(Colour);
+	gameObjectShape.setPosition(sf::Vector2f(Position.x, Position.y));
+
+	gameObjectText.setString(gameObjectName);
+	
+
 }
 
 void gameObject::setNameOfObject(std::string name)

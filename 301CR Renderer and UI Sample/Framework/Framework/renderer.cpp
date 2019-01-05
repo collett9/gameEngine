@@ -1,7 +1,7 @@
 #include "renderer.h"
+#include <iostream>
 
-
-
+sf::Font font;
 
 renderer::renderer(std::string windowName, int Width, int Height)
 {
@@ -10,6 +10,12 @@ renderer::renderer(std::string windowName, int Width, int Height)
 	//pointerWindow.setTitle(windowName);
 
 	//gameWindow = &pointerWindow;
+	
+	if (!font.loadFromFile("arial.ttf"))
+	{
+		std::cout << "Error: Failed to load font!" << std::endl;
+
+	}
 
 	gameWindow = new sf::RenderWindow(sf::VideoMode(Width, Height), windowName);
 }
@@ -29,6 +35,31 @@ void renderer::updateRenderer(std::vector<gameObject*> gameObjectsVector, std::v
 
 }
 
+void renderer::updateRendererForGui(std::vector<gameObject*> gameObjectsVector)
+{
+
+	//for (int i = 0; i < gameObjectsVector.size(); i++)
+	//{
+	//	gameObjectsVector[i]->gameObjectShape.setPosition(gameObjectsVector[i]->position);
+	////	gameObjectsVector[i]->gameObjectShape.setPosition(sf::Vector2f(gameObjectsVector[i]->position, positionVectors[i].y));
+	//	gameObjectsVector[i]->gameObjectShape.setOrigin(sf::Vector2f(sizeVectors[i].x, sizeVectors[i].y));
+	//	gameObjectsVector[i]->gameObjectShape.setRotation(glm::degrees(rotationVectors[i]));
+
+	//}
+
+}
+
+void renderer::textRenderer(std::vector<gameObject*> gameObjectVector)
+{
+	for (int i = 0; i < gameObjectVector.size(); i++)
+	{
+		
+		gameObjectVector[i]->gameObjectText.setFont(font);
+		gameObjectVector[i]->gameObjectText.setFillColor(sf::Color::Black);
+		gameObjectVector[i]->gameObjectText.setPosition(sf::Vector2f(gameObjectVector[i]->position.x, gameObjectVector[i]->position.y));
+	}
+}
+
 void renderer::renderToScreen(std::vector<gameObject*> gameObjectVector)
 {
 	gameWindow->clear(sf::Color::Blue);
@@ -36,7 +67,10 @@ void renderer::renderToScreen(std::vector<gameObject*> gameObjectVector)
 	for (int i = 0; i < gameObjectVector.size(); i++)
 	{
 		gameWindow->draw(gameObjectVector[i]->gameObjectShape);
+		gameWindow->draw(gameObjectVector[i]->gameObjectText);
 	}
+
+	textRenderer(gameObjectVector);
 
 	gameWindow->display();
 }

@@ -22,6 +22,7 @@ public:
 	float sizeY, sizeX;
 
 	sf::RectangleShape gameObjectShape;
+	sf::Text gameObjectText;
 	std::string gameObjectName;
 
 	//void renderCreation(sf::Vector2f size, sf::Color colour, sf::Vector2f position, float outLineSize, sf::Color outlineColour);
@@ -30,6 +31,7 @@ public:
 
 	gameObject();
 	void setup(b2Vec2 Position, float Rotation, float SizeX, float SizeY, sf::Color Colour, float Density, float Friction, float LinearDamping, bool isStatic);
+	void setupForGui(b2Vec2 Position, float SizeX, float SizeY, sf::Color Colour);
 	void setNameOfObject(std::string name);
 
 	~gameObject();
