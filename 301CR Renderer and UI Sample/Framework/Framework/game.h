@@ -42,6 +42,8 @@ public:
 	std::vector <gameObject*> battleMenuObjectVector;
 	std::vector <gameEvent*> gameEventsVector;
 
+	bool battleScreen = false;
+
 	GUI gui;
 
 	float32 timeStep = 1.0f / 60.0f;
@@ -59,6 +61,7 @@ public:
 	void levelSetup(int SizeX, int SizeY, std::string imageFileName);
 	void update();
 	void eventHandler();
+	void guiHandler();
 	void inputHandlerGame();
 	void render();
 

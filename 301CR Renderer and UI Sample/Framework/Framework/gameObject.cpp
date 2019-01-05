@@ -34,6 +34,8 @@ void gameObject::setup(b2Vec2 Position, float Rotation, float SizeX, float SizeY
 	friction = Friction;
 	linearDamping = LinearDamping;
 	IsStatic = isStatic;
+
+	colourOfObject = Colour;
 }
 
 //setting up a non-physical game object
@@ -48,6 +50,8 @@ void gameObject::setupForGui(b2Vec2 Position, float SizeX, float SizeY, sf::Colo
 	gameObjectShape.setPosition(sf::Vector2f(Position.x, Position.y));
 
 	gameObjectText.setString(gameObjectName);
+
+	colourOfObject = Colour;
 	
 
 }

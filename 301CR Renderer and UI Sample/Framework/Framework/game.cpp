@@ -38,7 +38,6 @@ void game::setUp(std::string windowName, int Width, int Height)
 
 	//gameObjectsSetup();
 
-
 	physics->physicsSetup();
 	input = new inputHandler();
 
@@ -211,6 +210,18 @@ void game::update()
 	float32 angle = physics->rotationVectors[1];
 	printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);*/
 
+	if (rendererBattle != NULL)
+	{
+		battleScreen = true;
+		input->setUpRenderer(rendererBattle);
+	}
+
+	else
+	{
+		input->setUpRenderer(rendererGame);
+		battleScreen = false;
+	}
+
 }
 
 void game::eventHandler()
@@ -242,8 +253,16 @@ void game::eventHandler()
 	}
 }
 
+void game::guiHandler()
+{
+	
+
+}
+
 void game::inputHandlerGame()
 {
+
+
 
 	inputHandler::buttons whichButtonHasBeenPressed = input->whichKey();
 
@@ -265,24 +284,36 @@ void game::inputHandlerGame()
 	*/
 
 
-	if (whichButtonHasBeenPressed == inputHandler::leftArrow)
+	if (whichButtonHasBeenPressed == inputHandler::leftArrow && battleScreen == false)
 	{
 
 		gameEventsVector.push_back(new gameEvent(eventMove(-50.0f, 0.0f, gameObjectsVector[playerId])));
 	}
 
-	if (whichButtonHasBeenPressed == inputHandler::rightArrow)
+	if (whichButtonHasBeenPressed == inputHandler::rightArrow && battleScreen == false)
 	{
 		gameEventsVector.push_back(new gameEvent(eventMove(50.0f, 0.0f, gameObjectsVector[playerId])));
 	}
-	if (whichButtonHasBeenPressed == inputHandler::upArrow)
+	if (whichButtonHasBeenPressed == inputHandler::upArrow && battleScreen == false)
 	{
 
 		gameEventsVector.push_back(new gameEvent(eventMove(0.0f, 50.0f, gameObjectsVector[playerId])));
 	}
-	if (whichButtonHasBeenPressed == inputHandler::downArrow)
+
+	if (whichButtonHasBeenPressed == inputHandler::upArrow && battleScreen == true)
+	{
+
+		gui.GUIHandlerNextElement(gui.gameObjectsInGUI);
+	}
+	if (whichButtonHasBeenPressed == inputHandler::downArrow && battleScreen == false)
 	{
 		gameEventsVector.push_back(new gameEvent(eventMove(0.0f, -50.0f, gameObjectsVector[playerId])));
+	}
+	if (whichButtonHasBeenPressed == inputHandler::downArrow && battleScreen == true)
+	{
+
+		gui.GUIHandlerPreviousElement(gui.gameObjectsInGUI);
+		
 	}
 
 	if (whichButtonHasBeenPressed == inputHandler::space)
@@ -295,6 +326,7 @@ void game::inputHandlerGame()
 
 		//audioSystemGame->playAudio("meow.wav");
 		gameEventsVector.push_back(new gameEvent(audioEvent(0)));
+		gui.GUIHandlerFirstElement(gui.gameObjectsInGUI);
 
 	}
 
@@ -311,9 +343,12 @@ void game::inputHandlerGame()
 		levelSetup(15, 15, "test1.png");
 	}
 
-	if (whichButtonHasBeenPressed == inputHandler::escape)
+	if (whichButtonHasBeenPressed == inputHandler::escape && battleScreen == true)
 	{
-		rendererGame->gameWindow->close();
+		input->rendererEvent->gameWindow->close();
+		input->rendererEvent = NULL;
+		rendererBattle = NULL;
+	
 	}
 
 	if (whichButtonHasBeenPressed == inputHandler::resized)
@@ -321,19 +356,26 @@ void game::inputHandlerGame()
 		// update the view to the new size of the window
 
 	}
+	gui.GUIUpdate(gui.gameObjectsInGUI);
 }
 
 void game::render()
 {
 	// use the renderer to render the gameObjects to the screen
-	rendererGame->renderToScreen(gameObjectsVector);
 
-	while(rendererBattle != NULL)
+	
+
+	if(battleScreen == true)
 	{ 
 		rendererBattle->renderToScreen(gui.gameObjectsInGUI);
+		//gui.gameObjectsInGUI[0].
 	
 	}
 	
+	else
+	{
+		rendererGame->renderToScreen(gameObjectsVector);
+	}
 
 
 }

@@ -18,10 +18,13 @@ public:
 	float friction;
 	float linearDamping;
 	bool IsStatic;
+	bool canBeSelected;
+	bool isSelected = false;
 
 	float sizeY, sizeX;
 
 	sf::RectangleShape gameObjectShape;
+	sf::Color colourOfObject;
 	sf::Text gameObjectText;
 	std::string gameObjectName;
 
