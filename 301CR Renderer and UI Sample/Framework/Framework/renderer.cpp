@@ -57,6 +57,8 @@ void renderer::textRenderer(std::vector<gameObject*> gameObjectVector)
 		gameObjectVector[i]->gameObjectText.setFont(font);
 		gameObjectVector[i]->gameObjectText.setFillColor(sf::Color::Black);
 		gameObjectVector[i]->gameObjectText.setPosition(sf::Vector2f(gameObjectVector[i]->position.x, gameObjectVector[i]->position.y));
+		//gameObjectVector[i]->gameObjectText.setString(gameObjectVector[i]->gameObjectName);
+		gameObjectVector[i]->gameObjectText.setString(gameObjectVector[i]->UIDescription);
 	}
 }
 

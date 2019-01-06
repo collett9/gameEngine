@@ -18,6 +18,11 @@
 #include "GUI.h"
 #include "GUIElement.h"
 #include "inputHandler.h"
+#include "ogre.h"
+#include "Goblin.h"
+#include "player.h"
+#include "battle.h"
+#include "battleEvent.h"
 
 class game
 {
@@ -35,6 +40,8 @@ public:
 
 	inputHandler *input = nullptr;
 
+	battle *battleGame = nullptr;
+
 	bool isGameWindowOpen;
 
 
@@ -50,6 +57,8 @@ public:
 
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;
+
+	int enemyToFightInBattle;
 
 	sf::Event e;
 

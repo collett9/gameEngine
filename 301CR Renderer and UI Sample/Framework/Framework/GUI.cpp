@@ -12,18 +12,17 @@ void GUI::BattleGUISetup()
 	//newElement1->setupForGui(b2Vec2(100.0f, 500.0f), 100.0f, 50.0f, sf::Color::Red);
 	//gameObjectsInGUI.push_back(newElement1);
 
-	addNewGUIElement(b2Vec2(100.0, 450.0f), 100.0f, 50.0f, sf::Color::Red, true);
-	addNewGUIElement(b2Vec2(100.0, 600.0f), 100.0f, 50.0f, sf::Color::Red, true);
+	addNewGUIElementWithText(b2Vec2(100.0, 450.0f), 100.0f, 50.0f, sf::Color::Red, true, "Attack!");
+	addNewGUIElementWithText(b2Vec2(100.0, 600.0f), 100.0f, 50.0f, sf::Color::Red, true, "Spell!");
 
-	addNewGUIElement(b2Vec2(1000.0, 600.0f), 100.0f, 50.0f, sf::Color::Blue, false);
+	//addNewGUIElement(b2Vec2(1000.0, 600.0f), 100.0f, 50.0f, sf::Color::Red, false);
 
 }
 
 void GUI::addNewGUIElement(b2Vec2 position, float sizeX, float sizeY, sf::Color colour, bool isSelectabble)
 {
 	GUIElement* newElement = new GUIElement;
-	newElement->setupGUIText("egg");
-	newElement->gameObjectName = "wegg"; //CHEAP!
+	//newElement->gameObjectName = "wegg"; //CHEAP!
 	newElement->setupForGui(position, sizeX, sizeY, colour);
 	newElement->gameObjectId = tempID;
 	newElement->canBeSelected = isSelectabble;
@@ -33,6 +32,21 @@ void GUI::addNewGUIElement(b2Vec2 position, float sizeX, float sizeY, sf::Color 
 
 	
 }
+
+void GUI::addNewGUIElementWithText(b2Vec2 position, float sizeX, float sizeY, sf::Color colour, bool isSelectabble, std::string boxText)
+{
+	GUIElement* newElement = new GUIElement;
+	newElement->gameObjectName = boxText;
+	newElement->UIDescription= boxText;
+	newElement->setupForGui(position, sizeX, sizeY, colour);
+	newElement->gameObjectId = tempID;
+	newElement->canBeSelected = isSelectabble;
+	gameObjectsInGUI.push_back(newElement);
+
+	tempID = tempID + 1;
+
+}
+
 
 void GUI::GUIHandlerFirstElement(std::vector<gameObject*> GUIElements)
 {
@@ -98,9 +112,24 @@ void GUI::GUIUpdate(std::vector<gameObject*> GUIElements)
 
 }
 
+//clear the GUI and reset it. Useful for restarting fights.
+void GUI::wipeGUI()
+{
+	gameObjectsInGUI.clear();
+	BattleGUISetup();
+
+}
+
+void GUI::updateGUIElementText(gameObject * GUIElement, std::string updatedText)
+{
+	GUIElement->UIDescription = updatedText;
+
+}
+
 
 GUI::GUI()
 {
+
 }
 
 

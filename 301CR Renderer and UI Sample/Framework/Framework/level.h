@@ -18,7 +18,11 @@ public:
 		nothing,
 		wall,
 		playerLocation,
-		enemyLocation
+		enemyLocation,
+		goblinLocation,
+		largeGoblinLocation,
+		ogreLocation,
+		doorLocation
 	};
 
 	struct levelChunk

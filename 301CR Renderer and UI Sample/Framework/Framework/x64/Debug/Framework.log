@@ -1,2 +1,5 @@
-﻿  gameObject.cpp
+﻿  game.cpp
+c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\game.cpp(207): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\game.cpp(211): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\liamc\documents\github\gameengine\301cr renderer and ui sample\framework\framework\game.cpp(254): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
   Framework.vcxproj -> C:\Users\liamc\Documents\GitHub\gameEngine\301CR Renderer and UI Sample\Framework\x64\Debug\Framework.exe

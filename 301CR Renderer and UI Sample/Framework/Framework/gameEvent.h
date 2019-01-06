@@ -16,7 +16,8 @@ public:
 	{
 		movement,
 		audio,
-		another
+		another,
+		attack
 
 
 	};
@@ -40,7 +41,8 @@ public:
 	{
 		Physics,
 		Renderer,
-		Audio
+		Audio,
+		Battle
 
 	};
 

@@ -78,6 +78,21 @@ void level::setupImage(std::string fileName)
 				levelData[i][j].whichChunk = enemyLocation;
 			}
 
+			else if (tempColourVector == sf::Vector3f(0.0f, 70.0f, 0.0f))
+			{
+				levelData[i][j].whichChunk = goblinLocation;
+			}
+
+			else if (tempColourVector == sf::Vector3f(180.0f, 75.0f, 25.0f))
+			{
+				levelData[i][j].whichChunk = ogreLocation;
+			}
+
+			else if (tempColourVector == sf::Vector3f(255.0f, 255.0f, 0.0f))
+			{
+				levelData[i][j].whichChunk = doorLocation;
+			}
+
 			else
 			{
 				levelData[i][j].whichChunk = nothing;

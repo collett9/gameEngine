@@ -63,21 +63,75 @@ void game::gameObjectsSetup()
 	}
 }
 
+Enemy * enemyThatYouAreFighting;
+player * playerCharacter;
+
+gameObject * enemyHPElement;
+gameObject * playerHPElement;
 
 // function to deal with the collision of the various gameobjects within the scene
 void game::gameObjectsCollide()
 {
 	if (physics->listener.data1 != NULL)
 	{
-		std::cout << "it do";
+		//std::cout << "it do";
 	}
 
 	// if player gameobject collides with a gameobject with the name 'enemy'
-	if (physics->listener.data1 == playerId && gameObjectsVector[physics->listener.data2]->gameObjectName == "enemy" || physics->listener.data2 == playerId && gameObjectsVector[physics->listener.data1]->gameObjectName == "enemy")
+	if (physics->listener.data1 == playerId && gameObjectsVector[physics->listener.data2]->whatType == gameObject::Enemy)
 	{
-			std::cout << "egg" << std::endl;
+			// the name of the enemy you are fighting
+			gui.addNewGUIElementWithText(b2Vec2(1000.0, 450.0f), 100.0f, 50.0f, sf::Color::Red, false, gameObjectsVector[physics->listener.data2]->gameObjectName);
+			//Enemy* egg = new Enemy(Enemy*)gameObjectsVector[physics->listener.data2];
+
+			//creating a pointer to this enemy for use later
+			enemyThatYouAreFighting = (Enemy*)gameObjectsVector[physics->listener.data2];
+
+			// enemy's health UI Setup
+			gui.addNewGUIElementWithText(b2Vec2(1000.0, 600.0f), 100.0f, 50.0f, sf::Color::Red, false, (std::to_string(enemyThatYouAreFighting->health)));
+			enemyHPElement = gui.gameObjectsInGUI.back();
+
+			//creating a pointer to player for use later
+			playerCharacter = (player*)gameObjectsVector[playerId];
+			
+			// player's health UI Setup
+			gui.addNewGUIElementWithText(b2Vec2(100.0, 300.0f), 100.0f, 50.0f, sf::Color::Red, false, (std::to_string(playerCharacter->health)));
+			playerHPElement = gui.gameObjectsInGUI.back();
+
+			//gui.addNewGUIElementWithText(b2Vec2(1000.0, 600.0f), 100.0f, 50.0f, sf::Color::Red, false, std::string(gameObjectsVector[physics->listener.data2]->gameObjectName));
 			rendererBattle = new renderer("FIGHT!", 1280, 720);
+
+			battleGame = new battle();
+
+			enemyToFightInBattle = physics->listener.data2;
 		
+	}
+
+	else if (physics->listener.data2 == playerId && gameObjectsVector[physics->listener.data1]->whatType == gameObject::Enemy)
+	{
+		// the name of the enemy you are fighting
+		gui.addNewGUIElementWithText(b2Vec2(1000.0, 450.0f), 100.0f, 50.0f, sf::Color::Red, false, gameObjectsVector[physics->listener.data1]->gameObjectName);
+
+		//creating a pointer to this enemy for use later
+		enemyThatYouAreFighting = (Enemy*)gameObjectsVector[physics->listener.data1];
+
+		// enemy's health UI Setup
+		gui.addNewGUIElementWithText(b2Vec2(1000.0, 600.0f), 100.0f, 50.0f, sf::Color::Red, false, (std::to_string(enemyThatYouAreFighting->health)));
+		enemyHPElement = gui.gameObjectsInGUI.back();
+
+		playerCharacter = (player*)gameObjectsVector[playerId];
+		gui.addNewGUIElementWithText(b2Vec2(100.0, 300.0f), 100.0f, 50.0f, sf::Color::Red, false, (std::to_string(playerCharacter->health)));
+		playerHPElement = gui.gameObjectsInGUI.back();
+
+
+
+		rendererBattle = new renderer("FIGHT!", 1280, 720);
+		
+		battleGame = new battle();
+
+	
+
+		enemyToFightInBattle = physics->listener.data1;
 	}
 
 
@@ -149,11 +203,11 @@ void game::levelSetup(int SizeX, int SizeY, std::string imageFileName)
 		{
 			if (newLevel.levelData[i][j].whichChunk == level::playerLocation)
 			{
-				gameObject* object2 = new gameObject();
-				object2->setup(b2Vec2(newLevel.levelData[i][j].actualPositionX, newLevel.levelData[i][j].actualPositionY), 0, 10, 10, sf::Color::Yellow, 0.3, 0.3, 0.3, false);
-				object2->setNameOfObject("player");
+				player* playerCharacter = new player();
+				playerCharacter->setup(b2Vec2(newLevel.levelData[i][j].actualPositionX, newLevel.levelData[i][j].actualPositionY), 0, 10, 10, sf::Color::Yellow, 0.3, 0.3, 0.3, false);
+				playerCharacter->setNameOfObject("player");
 			//	object2->gameObjectShape.setOrigin(newLevel.levelData[i][j].actualPositionX, newLevel.levelData[i][j].actualPositionY);
-				gameObjectsVector.push_back(object2);
+				gameObjectsVector.push_back(playerCharacter);
 				playerId = gameObjectsVector.size() - 1;
 			}
 
@@ -164,10 +218,20 @@ void game::levelSetup(int SizeX, int SizeY, std::string imageFileName)
 				gameObjectsVector.push_back(wallObject1);
 			}
 
-			if (newLevel.levelData[i][j].whichChunk == level::enemyLocation)
+			if (newLevel.levelData[i][j].whichChunk == level::goblinLocation)
 			{
-				gameObject* enemyObject = (new Enemy(b2Vec2(newLevel.levelData[i][j].actualPositionX, newLevel.levelData[i][j].actualPositionY), 100));
-				enemyObject->setNameOfObject("enemy");
+				Goblin* enemyObject = (new Goblin());
+				enemyObject->EnemySetup(b2Vec2(newLevel.levelData[i][j].actualPositionX, newLevel.levelData[i][j].actualPositionY));
+				enemyObject->setNameOfObject("Goblin");
+				gameObjectsVector.push_back(enemyObject);
+
+			}
+
+			if (newLevel.levelData[i][j].whichChunk == level::ogreLocation)
+			{
+				ogre* enemyObject = (new ogre());
+				enemyObject->EnemySetup(b2Vec2(newLevel.levelData[i][j].actualPositionX, newLevel.levelData[i][j].actualPositionY));
+				enemyObject->setNameOfObject("Ogre");
 				gameObjectsVector.push_back(enemyObject);
 
 			}
@@ -199,6 +263,18 @@ void game::update()
 	gameObjectsCollide();
 
 	rendererGame->updateRenderer(gameObjectsVector, physics->positionVectors, physics->rotationVectors, physics->sizeVectors);
+
+	for (int i = 0; i < gameObjectsVector.size(); i++)
+	{
+		if (gameObjectsVector[i]->toBeRemoved == true)
+		{
+			//gameObjectsVector.erase(gameObjectsVector.begin() + i);
+			gameObjectsVector[i] = new gameObject();
+		}
+	}
+
+
+	//gui.updateGUIElementText(gui.gameObjectsInGUI[enemyto])
 
 	/*if (rendererBattle != NULL)
 	{
@@ -238,6 +314,30 @@ void game::eventHandler()
 			if (gameEventsVector[i]->whichSubsystemsInvovlved.size() > 0 && gameEventsVector[i]->whichSubsystemsInvovlved[j] == gameEvent::Audio)
 			{
 				audioSystemGame->audioEventSolver(gameEventsVector[i]);
+			}
+
+			// new event solver for battle
+			if (gameEventsVector[i]->whichSubsystemsInvovlved.size() > 0 && gameEventsVector[i]->whichSubsystemsInvovlved[j] == gameEvent::Battle)
+			{
+				if (battleGame != NULL)
+				{
+					battleGame->battleEventSolver(gameEventsVector[i]);
+				}
+
+				if (playerCharacter != NULL)
+				{
+					gui.updateGUIElementText(playerHPElement, std::to_string(playerCharacter->health));
+					//playerHPElement->gameObjectText.setString(std::to_string(playerCharacter->health));
+				}
+
+
+
+				if (enemyThatYouAreFighting != NULL)
+				{
+
+					gui.updateGUIElementText(enemyHPElement, std::to_string(enemyThatYouAreFighting->health));
+					//enemyThatYouAreFighting->gameObjectText.setString(std::to_string(enemyThatYouAreFighting->health));
+				}
 			}
 		}
 
@@ -316,7 +416,7 @@ void game::inputHandlerGame()
 		
 	}
 
-	if (whichButtonHasBeenPressed == inputHandler::space)
+	if (whichButtonHasBeenPressed == inputHandler::space && battleScreen == true)
 	{
 		//gameObjectsVector.pop_back();
 		//delete gameObjectsVector.front();
@@ -325,8 +425,18 @@ void game::inputHandlerGame()
 		//physics.physicsBodies[1]->ApplyForce(b2Vec2(0, -1), b2Vec2(position.x + 5, position.y + 5), 1);
 
 		//audioSystemGame->playAudio("meow.wav");
-		gameEventsVector.push_back(new gameEvent(audioEvent(0)));
-		gui.GUIHandlerFirstElement(gui.gameObjectsInGUI);
+		//gameEventsVector.push_back(new gameEvent(audioEvent(0)));
+		if (gui.gameObjectsInGUI[gui.currentlySelectedElement]->gameObjectName == "Attack!")
+		{
+			gameEventsVector.push_back(new gameEvent(battleEvent(gameObjectsVector[playerId], gameObjectsVector[enemyToFightInBattle])));
+			//gameEventsVector.push_back(new gameEvent(battleEvent(gameObjectsVector[enemyToFightInBattle], gameObjectsVector[playerId])));
+
+
+		}
+
+
+
+		//gui.GUIHandlerFirstElement(gui.gameObjectsInGUI);
 
 	}
 
@@ -374,6 +484,8 @@ void game::render()
 	
 	else
 	{
+		playerCharacter = NULL;
+		enemyThatYouAreFighting = NULL;
 		rendererGame->renderToScreen(gameObjectsVector);
 	}
 
