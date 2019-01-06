@@ -11,8 +11,8 @@ public:
 
 	FMOD::Studio::System* system;
 	FMOD::System* lowLevelSystem;
-	FMOD::Channel* catChannel = NULL;
-	FMOD::Sound* meow = NULL;
+	FMOD::Channel* channelToUse = NULL;
+	FMOD::Sound* soundToUSe = NULL;
 
 	std::vector <FMOD::Sound*> gameSounds;
 	std::vector <int> soundIds;

@@ -2,7 +2,11 @@
 
 int playerId = 0;
 
-
+sf::Texture* playerTexture;
+sf::Texture* goblinTexture;
+sf::Texture* ogreTexture;
+sf::Texture* wallTexture;
+sf::Texture* doorTexture;
 
 //setting up renderer, physics as well as ui's
 void game::setUp(std::string windowName, int Width, int Height)
@@ -11,13 +15,23 @@ void game::setUp(std::string windowName, int Width, int Height)
 
 	audioSystemGame = new audioSystem();
 
+	imageLoader imageLoader1;
 
+	playerTexture = imageLoader1.loadTexture("../Textures/player.png");
 
-	audioSystemGame->loadSound("meow.wav");
+	goblinTexture = imageLoader1.loadTexture("../Textures/goblin.png");
 
-	audioSystemGame->loadSound("ahem_x.wav");
+	ogreTexture = imageLoader1.loadTexture("../Textures/ogre.png");
 
-	levelSetup(15, 15, "test.png");
+	wallTexture = imageLoader1.loadTexture("../Textures/wall.png");
+
+	doorTexture = imageLoader1.loadTexture("../Textures/door.png");
+
+	audioSystemGame->loadSound("../Sounds/swing3.wav");
+
+	audioSystemGame->loadSound("../Sounds/bottle.wav");
+
+	levelSetup(15, 15, "../Levels/level0.png");
 
 
 	gui.BattleGUISetup();
@@ -68,6 +82,7 @@ player * playerCharacter;
 
 gameObject * enemyHPElement;
 gameObject * playerHPElement;
+gameObject * potionElement;
 
 // function to deal with the collision of the various gameobjects within the scene
 void game::gameObjectsCollide()
@@ -78,8 +93,11 @@ void game::gameObjectsCollide()
 	}
 
 	// if player gameobject collides with a gameobject with the name 'enemy'
-	if (physics->listener.data1 == playerId && gameObjectsVector[physics->listener.data2]->whatType == gameObject::Enemy)
+	if (physics->listener.data1 == playerId && gameObjectsVector[physics->listener.data2]->whatType == gameObject::Enemy && rendererBattle == NULL)
 	{
+		
+			
+	
 			// the name of the enemy you are fighting
 			gui.addNewGUIElementWithText(b2Vec2(1000.0, 450.0f), 100.0f, 50.0f, sf::Color::Red, false, gameObjectsVector[physics->listener.data2]->gameObjectName);
 			//Enemy* egg = new Enemy(Enemy*)gameObjectsVector[physics->listener.data2];
@@ -88,15 +106,18 @@ void game::gameObjectsCollide()
 			enemyThatYouAreFighting = (Enemy*)gameObjectsVector[physics->listener.data2];
 
 			// enemy's health UI Setup
-			gui.addNewGUIElementWithText(b2Vec2(1000.0, 600.0f), 100.0f, 50.0f, sf::Color::Red, false, (std::to_string(enemyThatYouAreFighting->health)));
+			gui.addNewGUIElementWithText(b2Vec2(1000.0, 600.0f), 100.0f, 50.0f, sf::Color::Red, false, ("HP: " + std::to_string(enemyThatYouAreFighting->health)));
 			enemyHPElement = gui.gameObjectsInGUI.back();
 
 			//creating a pointer to player for use later
 			playerCharacter = (player*)gameObjectsVector[playerId];
 			
 			// player's health UI Setup
-			gui.addNewGUIElementWithText(b2Vec2(100.0, 300.0f), 100.0f, 50.0f, sf::Color::Red, false, (std::to_string(playerCharacter->health)));
+			gui.addNewGUIElementWithText(b2Vec2(100.0, 300.0f), 100.0f, 50.0f, sf::Color::Red, false, ("HP: " + std::to_string(playerCharacter->health)));
 			playerHPElement = gui.gameObjectsInGUI.back();
+
+			gui.addNewGUIElementWithText(b2Vec2(300.0, 600.0f), 100.0f, 50.0f, sf::Color::Red, false, "Remaining: " + (std::to_string(playerCharacter->numberOfPotions)));
+			potionElement = gui.gameObjectsInGUI.back();
 
 			//gui.addNewGUIElementWithText(b2Vec2(1000.0, 600.0f), 100.0f, 50.0f, sf::Color::Red, false, std::string(gameObjectsVector[physics->listener.data2]->gameObjectName));
 			rendererBattle = new renderer("FIGHT!", 1280, 720);
@@ -107,8 +128,9 @@ void game::gameObjectsCollide()
 		
 	}
 
-	else if (physics->listener.data2 == playerId && gameObjectsVector[physics->listener.data1]->whatType == gameObject::Enemy)
+	else if (physics->listener.data2 == playerId && gameObjectsVector[physics->listener.data1]->whatType == gameObject::Enemy && rendererBattle == NULL)
 	{
+		potionElement = gui.gameObjectsInGUI[1];
 		// the name of the enemy you are fighting
 		gui.addNewGUIElementWithText(b2Vec2(1000.0, 450.0f), 100.0f, 50.0f, sf::Color::Red, false, gameObjectsVector[physics->listener.data1]->gameObjectName);
 
@@ -116,13 +138,15 @@ void game::gameObjectsCollide()
 		enemyThatYouAreFighting = (Enemy*)gameObjectsVector[physics->listener.data1];
 
 		// enemy's health UI Setup
-		gui.addNewGUIElementWithText(b2Vec2(1000.0, 600.0f), 100.0f, 50.0f, sf::Color::Red, false, (std::to_string(enemyThatYouAreFighting->health)));
+		gui.addNewGUIElementWithText(b2Vec2(1000.0, 600.0f), 100.0f, 50.0f, sf::Color::Red, false, ("HP: " + std::to_string(enemyThatYouAreFighting->health)));
 		enemyHPElement = gui.gameObjectsInGUI.back();
 
 		playerCharacter = (player*)gameObjectsVector[playerId];
-		gui.addNewGUIElementWithText(b2Vec2(100.0, 300.0f), 100.0f, 50.0f, sf::Color::Red, false, (std::to_string(playerCharacter->health)));
+		gui.addNewGUIElementWithText(b2Vec2(100.0, 300.0f), 100.0f, 50.0f, sf::Color::Red, false, ("HP: " + std::to_string(playerCharacter->health)));
 		playerHPElement = gui.gameObjectsInGUI.back();
 
+		gui.addNewGUIElementWithText(b2Vec2(300.0, 600.0f), 100.0f, 50.0f, sf::Color::Red, false, "Remaining: " + (std::to_string(playerCharacter->numberOfPotions)));
+		potionElement = gui.gameObjectsInGUI.back();
 
 
 		rendererBattle = new renderer("FIGHT!", 1280, 720);
@@ -134,6 +158,32 @@ void game::gameObjectsCollide()
 		enemyToFightInBattle = physics->listener.data1;
 	}
 
+
+	if (physics->listener.data1 == playerId && gameObjectsVector[physics->listener.data2]->whatType == gameObject::Door)
+	{
+		door* newDoor = (door*)gameObjectsVector[physics->listener.data2];
+		levelSetup(15, 15, newDoor->whereDoorLeads);
+
+	}
+
+	else if (physics->listener.data2 == playerId && gameObjectsVector[physics->listener.data1]->whatType == gameObject::Door)
+	{
+		door* newDoor = (door*)gameObjectsVector[physics->listener.data1];
+		levelSetup(15, 15, newDoor->whereDoorLeads);
+
+	}
+
+
+	//DEBUG
+	if (physics->listener.data1 != NULL)
+	{
+		std::cout << gameObjectsVector[physics->listener.data1]->gameObjectName << std::endl;
+	}
+
+	if (physics->listener.data2 != NULL)
+	{
+		std::cout << gameObjectsVector[physics->listener.data2]->gameObjectName << std::endl;
+	}
 
 
 
@@ -194,9 +244,12 @@ void game::levelSetup(int SizeX, int SizeY, std::string imageFileName)
 	}
 
 
+
+
 	level newLevel = level(SizeX, SizeY, imageFileName);
+	newLevel.roomLayout(imageFileName);
 
-
+	int doorNumber = 0;
 	for (int i = 0; i < SizeX; i++)
 	{
 		for (int j = 0; j < SizeY; j++)
@@ -204,8 +257,10 @@ void game::levelSetup(int SizeX, int SizeY, std::string imageFileName)
 			if (newLevel.levelData[i][j].whichChunk == level::playerLocation)
 			{
 				player* playerCharacter = new player();
-				playerCharacter->setup(b2Vec2(newLevel.levelData[i][j].actualPositionX, newLevel.levelData[i][j].actualPositionY), 0, 10, 10, sf::Color::Yellow, 0.3, 0.3, 0.3, false);
+				playerCharacter->setup(b2Vec2(newLevel.levelData[i][j].actualPositionX, newLevel.levelData[i][j].actualPositionY), 0, 15, 15, sf::Color::Yellow, 0.3, 0.3, 0.3, false);
 				playerCharacter->setNameOfObject("player");
+				playerCharacter->gameObjectShape.setFillColor(sf::Color::White);
+				playerCharacter->gameObjectShape.setTexture(playerTexture);
 			//	object2->gameObjectShape.setOrigin(newLevel.levelData[i][j].actualPositionX, newLevel.levelData[i][j].actualPositionY);
 				gameObjectsVector.push_back(playerCharacter);
 				playerId = gameObjectsVector.size() - 1;
@@ -215,6 +270,8 @@ void game::levelSetup(int SizeX, int SizeY, std::string imageFileName)
 			{
 				gameObject* wallObject1 = (new wallObject(b2Vec2(newLevel.levelData[i][j].actualPositionX, newLevel.levelData[i][j].actualPositionY)));
 				wallObject1->setNameOfObject("wall");
+				wallObject1->gameObjectShape.setFillColor(sf::Color::White);
+				wallObject1->gameObjectShape.setTexture(wallTexture);
 				gameObjectsVector.push_back(wallObject1);
 			}
 
@@ -223,6 +280,8 @@ void game::levelSetup(int SizeX, int SizeY, std::string imageFileName)
 				Goblin* enemyObject = (new Goblin());
 				enemyObject->EnemySetup(b2Vec2(newLevel.levelData[i][j].actualPositionX, newLevel.levelData[i][j].actualPositionY));
 				enemyObject->setNameOfObject("Goblin");
+				enemyObject->gameObjectShape.setFillColor(sf::Color::White);
+				enemyObject->gameObjectShape.setTexture(goblinTexture);
 				gameObjectsVector.push_back(enemyObject);
 
 			}
@@ -232,8 +291,26 @@ void game::levelSetup(int SizeX, int SizeY, std::string imageFileName)
 				ogre* enemyObject = (new ogre());
 				enemyObject->EnemySetup(b2Vec2(newLevel.levelData[i][j].actualPositionX, newLevel.levelData[i][j].actualPositionY));
 				enemyObject->setNameOfObject("Ogre");
+				enemyObject->gameObjectShape.setFillColor(sf::Color::White);
+				enemyObject->gameObjectShape.setTexture(ogreTexture);
 				gameObjectsVector.push_back(enemyObject);
 
+			}
+
+			if (newLevel.levelData[i][j].whichChunk == level::doorLocation)
+			{
+				door* doorObject = (new door());
+				doorObject->setup(b2Vec2(newLevel.levelData[i][j].actualPositionX, newLevel.levelData[i][j].actualPositionY), 0, 25, 25, sf::Color::Yellow, 0.3, 0.3, 0.3, true);
+				//enemyObject->EnemySetup(b2Vec2(newLevel.levelData[i][j].actualPositionX, newLevel.levelData[i][j].actualPositionY));
+				doorObject->setNameOfObject("Door" + std::to_string(doorNumber));
+				doorObject->gameObjectShape.setFillColor(sf::Color::White);
+				doorObject->gameObjectShape.setTexture(doorTexture);
+
+				doorObject->whereDoorLeads = newLevel.doorEntrances[doorNumber];
+				gameObjectsVector.push_back(doorObject);
+
+
+				doorNumber++;
 			}
 		}
 	}
@@ -326,7 +403,9 @@ void game::eventHandler()
 
 				if (playerCharacter != NULL)
 				{
-					gui.updateGUIElementText(playerHPElement, std::to_string(playerCharacter->health));
+					gui.updateGUIElementText(playerHPElement, "HP: " + std::to_string(playerCharacter->health));
+
+					gui.updateGUIElementText(potionElement, "Remaining: " + std::to_string(playerCharacter->numberOfPotions));
 					//playerHPElement->gameObjectText.setString(std::to_string(playerCharacter->health));
 				}
 
@@ -335,11 +414,16 @@ void game::eventHandler()
 				if (enemyThatYouAreFighting != NULL)
 				{
 
-					gui.updateGUIElementText(enemyHPElement, std::to_string(enemyThatYouAreFighting->health));
+					gui.updateGUIElementText(enemyHPElement, "HP: " + std::to_string(enemyThatYouAreFighting->health));
 					//enemyThatYouAreFighting->gameObjectText.setString(std::to_string(enemyThatYouAreFighting->health));
 				}
 			}
 		}
+
+	}
+
+	for (int i = 0; i < gameEventsVector.size(); i++)
+	{
 
 		if (gameEventsVector[i]->whichSubsystemsInvovlved.size() == 0)
 		{
@@ -347,9 +431,9 @@ void game::eventHandler()
 			gameEventsVector.back()->clearMemory();
 			delete gameEventsVector.back();
 			gameEventsVector.pop_back();
-			
-		}
+			//gameEventsVector.clear()
 
+		}
 	}
 }
 
@@ -387,17 +471,17 @@ void game::inputHandlerGame()
 	if (whichButtonHasBeenPressed == inputHandler::leftArrow && battleScreen == false)
 	{
 
-		gameEventsVector.push_back(new gameEvent(eventMove(-50.0f, 0.0f, gameObjectsVector[playerId])));
+		gameEventsVector.push_back(new gameEvent(eventMove(-10.0f, 0.0f, gameObjectsVector[playerId])));
 	}
 
 	if (whichButtonHasBeenPressed == inputHandler::rightArrow && battleScreen == false)
 	{
-		gameEventsVector.push_back(new gameEvent(eventMove(50.0f, 0.0f, gameObjectsVector[playerId])));
+		gameEventsVector.push_back(new gameEvent(eventMove(10.0f, 0.0f, gameObjectsVector[playerId])));
 	}
 	if (whichButtonHasBeenPressed == inputHandler::upArrow && battleScreen == false)
 	{
 
-		gameEventsVector.push_back(new gameEvent(eventMove(0.0f, 50.0f, gameObjectsVector[playerId])));
+		gameEventsVector.push_back(new gameEvent(eventMove(0.0f, 10.0f, gameObjectsVector[playerId])));
 	}
 
 	if (whichButtonHasBeenPressed == inputHandler::upArrow && battleScreen == true)
@@ -407,7 +491,7 @@ void game::inputHandlerGame()
 	}
 	if (whichButtonHasBeenPressed == inputHandler::downArrow && battleScreen == false)
 	{
-		gameEventsVector.push_back(new gameEvent(eventMove(0.0f, -50.0f, gameObjectsVector[playerId])));
+		gameEventsVector.push_back(new gameEvent(eventMove(0.0f, -10.0f, gameObjectsVector[playerId])));
 	}
 	if (whichButtonHasBeenPressed == inputHandler::downArrow && battleScreen == true)
 	{
@@ -428,10 +512,25 @@ void game::inputHandlerGame()
 		//gameEventsVector.push_back(new gameEvent(audioEvent(0)));
 		if (gui.gameObjectsInGUI[gui.currentlySelectedElement]->gameObjectName == "Attack!")
 		{
+			gameEventsVector.push_back(new gameEvent(audioEvent(0)));
 			gameEventsVector.push_back(new gameEvent(battleEvent(gameObjectsVector[playerId], gameObjectsVector[enemyToFightInBattle])));
-			//gameEventsVector.push_back(new gameEvent(battleEvent(gameObjectsVector[enemyToFightInBattle], gameObjectsVector[playerId])));
+			// enemy fighting back. MOVE THIS LATER
+			gameEventsVector.push_back(new gameEvent(battleEvent(gameObjectsVector[enemyToFightInBattle], gameObjectsVector[playerId])));
+			
+
+		}
+
+		if (gui.gameObjectsInGUI[gui.currentlySelectedElement]->gameObjectName == "Potion!")
+		{
+			//gameEventsVector.push_back(new gameEvent(battleEvent(gameObjectsVector[playerId], gameObjectsVector[enemyToFightInBattle])));
+			gameEventsVector.push_back(new gameEvent(audioEvent(1)));
+			gameEventsVector.push_back(new gameEvent(potionEvent(gameObjectsVector[playerId])));
+
+			// enemy fighting back. MOVE THIS LATER
+			gameEventsVector.push_back(new gameEvent(battleEvent(gameObjectsVector[enemyToFightInBattle], gameObjectsVector[playerId])));
 
 
+			// enemy fighting back. MOVE THIS LATER
 		}
 
 
@@ -450,7 +549,7 @@ void game::inputHandlerGame()
 		//texturedShape.move(sf::Vector2f(0.0f, 0.5f));
 		//physics.physicsBodies[1]->ApplyForce(b2Vec2(0, -1), b2Vec2(position.x + 5, position.y + 5), 1);
 		gameEventsVector.push_back(new gameEvent(audioEvent(1)));
-		levelSetup(15, 15, "test1.png");
+		levelSetup(15, 15, "../Levels/level2.png");
 	}
 
 	if (whichButtonHasBeenPressed == inputHandler::escape && battleScreen == true)

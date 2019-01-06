@@ -3,6 +3,7 @@
 #include <Box2D\Box2D.h>
 #include <SFML\Graphics.hpp>
 #include <string>
+#include <iostream>
 //#include "physicsSync.h"
 
 
@@ -26,6 +27,7 @@ public:
 	sf::RectangleShape gameObjectShape;
 	sf::Color colourOfObject;
 	sf::Text gameObjectText;
+	sf::Texture* gameObjectTexture;
 	std::string gameObjectName;
 	std::string UIDescription;
 
@@ -34,7 +36,8 @@ public:
 	enum typeOfObject
 	{
 		Environment,
-		Enemy
+		Enemy,
+		Door
 
 	};
 
@@ -48,6 +51,7 @@ public:
 	void setup(b2Vec2 Position, float Rotation, float SizeX, float SizeY, sf::Color Colour, float Density, float Friction, float LinearDamping, bool isStatic);
 	void setupForGui(b2Vec2 Position, float SizeX, float SizeY, sf::Color Colour);
 	void setNameOfObject(std::string name);
+	void setObjectImage(std::string fileName);
 
 	~gameObject();
 };

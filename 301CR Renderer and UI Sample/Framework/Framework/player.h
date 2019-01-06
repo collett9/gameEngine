@@ -6,6 +6,7 @@ class player :
 {
 public:
 	int health = 200;
+	int maxHealth = 200;
 	int numberOfPotions = 5;
 	int baseAttackPower = 50;
 

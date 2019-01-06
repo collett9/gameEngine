@@ -68,7 +68,7 @@ void audioSystem::playAudio(int soundIdToPlay)
 	{
 		if (i == soundIdToPlay)
 		{
-			lowLevelSystem->playSound(gameSounds[i], NULL, false, &catChannel);
+			lowLevelSystem->playSound(gameSounds[i], NULL, false, &channelToUse);
 		}
 	}
 
@@ -84,7 +84,7 @@ void audioSystem::playAudio(int soundIdToPlay)
 	//	std::cout << "The sound is not loaded!" << "\n";
 	//}
 
-	meow = NULL;
+	soundToUSe = NULL;
 }
 
 void audioSystem::audioEventSolver(gameEvent * gameEventToSolve)

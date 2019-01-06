@@ -64,7 +64,8 @@ void renderer::textRenderer(std::vector<gameObject*> gameObjectVector)
 
 void renderer::renderToScreen(std::vector<gameObject*> gameObjectVector)
 {
-	gameWindow->clear(sf::Color::Blue);
+
+	gameWindow->clear(sf::Color(25,25,25,255));
 
 	for (int i = 0; i < gameObjectVector.size(); i++)
 	{

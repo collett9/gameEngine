@@ -17,7 +17,8 @@ public:
 		movement,
 		audio,
 		another,
-		attack
+		attack,
+		potion
 
 
 	};

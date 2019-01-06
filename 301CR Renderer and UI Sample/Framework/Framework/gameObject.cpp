@@ -61,6 +61,19 @@ void gameObject::setNameOfObject(std::string name)
 	gameObjectName = name;
 }
 
+void gameObject::setObjectImage(std::string fileName)
+{
+	gameObjectTexture = new sf::Texture;
+	if (!gameObjectTexture->loadFromFile(fileName))
+	{
+		std::cout << "Couldn't load image: " << fileName << "from directory!";
+	}
+
+	gameObjectShape.setTexture(gameObjectTexture);
+
+	gameObjectShape.setFillColor(sf::Color::White);
+}
+
 gameObject::~gameObject()
 {
 }

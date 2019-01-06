@@ -56,6 +56,27 @@ void battle::battleEventSolver(gameEvent * eventToSolve)
 		eventToSolve->whichSubsystemsInvovlved.pop_back();
 	}
 
+	if (eventToSolve->eventType == gameEvent::potion)
+	{
+		player *playerCharacter = (player*)eventToSolve->gameObjectsInvolved[0];
+
+		if (playerCharacter->numberOfPotions > 0)
+		{
+			playerCharacter->health = playerCharacter->health + 100;
+			playerCharacter->numberOfPotions = playerCharacter->numberOfPotions - 1;
+		}
+
+		if (playerCharacter->health > playerCharacter->maxHealth)
+		{
+			playerCharacter->health = playerCharacter->maxHealth;
+		}
+
+
+		eventToSolve->gameObjectsInvolved[0] = playerCharacter;
+
+		eventToSolve->whichSubsystemsInvovlved.pop_back();
+
+	}
 
 }
 

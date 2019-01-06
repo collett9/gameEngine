@@ -13,7 +13,7 @@ void GUI::BattleGUISetup()
 	//gameObjectsInGUI.push_back(newElement1);
 
 	addNewGUIElementWithText(b2Vec2(100.0, 450.0f), 100.0f, 50.0f, sf::Color::Red, true, "Attack!");
-	addNewGUIElementWithText(b2Vec2(100.0, 600.0f), 100.0f, 50.0f, sf::Color::Red, true, "Spell!");
+	addNewGUIElementWithText(b2Vec2(100.0, 600.0f), 100.0f, 50.0f, sf::Color::Red, true, "Potion!");
 
 	//addNewGUIElement(b2Vec2(1000.0, 600.0f), 100.0f, 50.0f, sf::Color::Red, false);
 

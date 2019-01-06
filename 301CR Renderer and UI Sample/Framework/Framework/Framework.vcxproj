@@ -141,6 +141,7 @@
     <ClCompile Include="audioSystem.cpp" />
     <ClCompile Include="battle.cpp" />
     <ClCompile Include="battleEvent.cpp" />
+    <ClCompile Include="door.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="eventMove.cpp" />
     <ClCompile Include="game.cpp" />
@@ -149,12 +150,14 @@
     <ClCompile Include="Goblin.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="GUIElement.cpp" />
+    <ClCompile Include="imageLoader.cpp" />
     <ClCompile Include="inputHandler.cpp" />
     <ClCompile Include="level.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ogre.cpp" />
     <ClCompile Include="physicsSync.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="potionEvent.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="wallObject.cpp" />
   </ItemGroup>
@@ -163,6 +166,7 @@
     <ClInclude Include="audioSystem.h" />
     <ClInclude Include="battle.h" />
     <ClInclude Include="battleEvent.h" />
+    <ClInclude Include="door.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="eventMove.h" />
     <ClInclude Include="game.h" />
@@ -171,11 +175,13 @@
     <ClInclude Include="Goblin.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="GUIElement.h" />
+    <ClInclude Include="imageLoader.h" />
     <ClInclude Include="inputHandler.h" />
     <ClInclude Include="level.h" />
     <ClInclude Include="ogre.h" />
     <ClInclude Include="physicsSync.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="potionEvent.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="wallObject.h" />
   </ItemGroup>

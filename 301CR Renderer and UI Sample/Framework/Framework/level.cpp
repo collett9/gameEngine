@@ -104,3 +104,29 @@ void level::setupImage(std::string fileName)
 
 
 }
+
+void level::roomLayout(std::string fileName)
+{
+	if (fileName == "../Levels/level0.png")
+	{
+		doorEntrances.push_back("../Levels/level1.png");
+		doorEntrances.push_back("../Levels/level2.png");
+		doorEntrances.push_back("../Levels/level3.png");
+	}
+
+	if (fileName == "../Levels/level1.png")
+	{
+		doorEntrances.push_back("../Levels/level0.png");
+	}
+
+	if (fileName == "../Levels/level2.png")
+	{
+		doorEntrances.push_back("../Levels/level0.png");
+	}
+
+	if (fileName == "../Levels/level3.png")
+	{
+		doorEntrances.push_back("../Levels/level0.png");
+	}
+
+}

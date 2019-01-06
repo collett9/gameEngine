@@ -96,10 +96,13 @@ void physicsSync::physicsUpdate(float32 timeStep, int32 velocityIterations, int3
 
 		positionVectors[i] = b2Vec2(physicsBodies[i]->GetPosition().x , physicsBodies[i]->GetPosition().y );
 		rotationVectors[i] = physicsBodies[i]->GetAngle();
+
+		// stop gameObjects rotating!
+		//rotationVectors[i] = 0;
 	}
 
-	b2Body *egg1;
-	b2Body *egg2;
+	//b2Body *egg1;
+	//b2Body *egg2;
 	
 	bool testedForCollisions = false;
 

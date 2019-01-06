@@ -23,6 +23,9 @@
 #include "player.h"
 #include "battle.h"
 #include "battleEvent.h"
+#include "door.h"
+#include "potionEvent.h"
+#include "imageLoader.h"
 
 class game
 {

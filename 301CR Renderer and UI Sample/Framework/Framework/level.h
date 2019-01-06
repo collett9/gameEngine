@@ -37,6 +37,10 @@ public:
 
 	std::vector <std::vector<levelChunk>> levelData;
 
+	std::vector <std::string> doorEntrances;
+
+	std::string fileNameUsed;
+
 
 
 	//level(int SizeX, int SizeY);
@@ -46,6 +50,9 @@ public:
 	~level();
 
 	void setupImage(std::string fileName);
+
+	void roomLayout(std::string fileName);
+
 
 	sf::Image testImage;
 
